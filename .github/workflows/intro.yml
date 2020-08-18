@@ -4,9 +4,14 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
+  Build_Preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs-site
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
