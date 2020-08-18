@@ -1,4 +1,4 @@
-name: Netllify Preview Builder
+name: Netlify Preview Builder
 on:
   push: 
     branches: [ master ]
@@ -8,4 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
           repository: SolaceDev/solace-dev-codelabs-site
