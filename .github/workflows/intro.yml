@@ -1,15 +1,18 @@
 name: Netlify Preview Builder
 on:
-  pull_request: 
+  push: 
     branches: [ master ]
+
+defaults:
+  run:
+    working-directory: site
 
 jobs:
   Build_Preview:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./site
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout site repo
+        uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs-site
       - name: Deploy to Netlify
