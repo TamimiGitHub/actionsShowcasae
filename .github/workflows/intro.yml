@@ -22,7 +22,6 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           build_directory: site
           build_command: ls && npm run serve
-        working-directory: ${{env.working-directory}}
       - name: Env variables
         run: |
           echo ${{env.GITHUB_SHA}}
