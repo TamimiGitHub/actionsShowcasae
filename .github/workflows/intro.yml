@@ -6,11 +6,14 @@ on:
 jobs:
   Build_Preview:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./site
     steps:
       - uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs-site
       - name: Deploy to Netlify
+        working-directory: ${{env.working-directory}}
         uses: jsmrcaga/action-netlify-deploy@v1.2.0
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
