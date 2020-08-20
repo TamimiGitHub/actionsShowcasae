@@ -12,5 +12,5 @@ jobs:
       - name: Echo the greeting's time
         run: |
           pwd
-          ${{GITHUB_WORKSPACE}}
+          ${{env.GITHUB_WORKSPACE}}
           ls  -aR
