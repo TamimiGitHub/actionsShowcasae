@@ -11,7 +11,7 @@ jobs:
         with:
           repository: SolaceDev/solace-dev-codelabs-site
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: jsmrcaga/action-netlify-deploy@v1.2.0
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
