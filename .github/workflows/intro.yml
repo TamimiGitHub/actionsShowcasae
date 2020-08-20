@@ -13,13 +13,13 @@ jobs:
         with:
           repository: SolaceDev/solace-dev-codelabs-site
       - name: Deploy to Netlify
-        working-directory: ${{env.working-directory}}
         uses: jsmrcaga/action-netlify-deploy@v1.2.0
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           build_directory: site
           build_command: ls && npm run serve
+        working-directory: ${{env.working-directory}}
       - name: Env variables
         run: |
           echo ${{env.GITHUB_SHA}}
