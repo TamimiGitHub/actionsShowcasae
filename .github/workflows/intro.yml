@@ -1,6 +1,6 @@
 name: Netlify Preview Builder
 on:
-  pull_request: 
+  push: 
     branches: [ master ]
 
 jobs:
