@@ -1,6 +1,7 @@
 name: Netlify Preview Builder
 on:
-  pull_request: 
+  push: 
+  # pull_request: 
     branches: [ master ]
 
 jobs:
@@ -11,10 +12,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs-site
-      - name: Netlify Actions
+      - name: build site
+        run: cd site && gulp serve:dist --codelabs-dir=./solace-dev-codelabs/codelabs && rm dist/codelabs && cp -r solace-dev-codelabs/codelabs dist
+      - name: Netlify Deploy
         uses: nwtgck/actions-netlify@v1.1.7
         with:
-          publish-dir: './site'
+          publish-dir: './site/dist'
           github-token: ${{ secrets.GITHUB_TOKEN }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
