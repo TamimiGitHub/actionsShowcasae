@@ -13,7 +13,7 @@ jobs:
         with:
           repository: SolaceDev/solace-dev-codelabs-site
       - name: build site
-        run: cd site && npm i && npm run dist
+        run: cd site && npm i && ls && npm run dist
       - name: Netlify Deploy
         uses: nwtgck/actions-netlify@v1.1.7
         with:
