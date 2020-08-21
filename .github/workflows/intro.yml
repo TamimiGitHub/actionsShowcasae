@@ -1,6 +1,6 @@
 name: Netlify Preview Builder
 on:
-  push: 
+  pul_request: 
     branches: [ master ]
 
 jobs:
@@ -18,5 +18,3 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      - name: testing
-        run: ls
