@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs-site
+          submodules: recursive
       - name: build site
         run: cd site && npm i && ls && npm run dist
       - name: Netlify Deploy
