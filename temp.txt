@@ -2,5 +2,3 @@ this is a test
 AYo
 PR
 asd This is a new line
-asd
-c
