@@ -12,6 +12,8 @@ jobs:
         with:
           repository: SolaceDev/solace-dev-codelabs-site
           submodules: recursive
+      - name: Checkout PR
+        run: cd site/solace-dev-codelabs && git checkout ${{ github.event.pull_request.head.sha }}
       - name: build site
         run: cd site && npm i && ls && npm run dist
       - name: Netlify Deploy
