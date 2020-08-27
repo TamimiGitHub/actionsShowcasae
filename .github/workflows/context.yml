@@ -1,0 +1,13 @@
+name: Context trigger
+on:
+  push: 
+    branches: [ master ]
+
+jobs:
+  Build_Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
