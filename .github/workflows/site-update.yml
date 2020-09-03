@@ -15,11 +15,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit the files
         run: |
-          pwd;ls
+          git remote -v
           git submodule update --remote
           git config user.name github-actions
           git config user.email github-actions@github.com
           git status
-          git add .
-          git commit -m "Update submodule"
-          git push https://#{{secrets.API_TOKEN}}@github.com/SolaceDev/solace-dev-codelabs-site.git origin master
