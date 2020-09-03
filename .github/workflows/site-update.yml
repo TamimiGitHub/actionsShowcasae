@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 
 jobs:
-  Build_Preview:
+  Checkout Site Repo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout site repo
@@ -15,10 +15,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit the files
         run: |
-          git reset --hard origin/master
+          pwd;ls
           git submodule update --remote
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git status
           git add .
           git commit -m "Update submodule"
-          git push 
+          # git push 
