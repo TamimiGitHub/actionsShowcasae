@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 
 jobs:
-  Checkout Site Repo:
+  Checkout_Site_Repo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout site repo
