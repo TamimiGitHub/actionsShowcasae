@@ -13,6 +13,10 @@ jobs:
           repository: SolaceDev/solace-dev-codelabs-site
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with: 
+          key: ${{ secrets.SSH_KEY }}
       - name: Update submodule
         run: |
           git submodule update --remote
@@ -20,8 +24,10 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "update submodule from github actions"
-      - name: Push the changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
-          repository: SolaceDev/solace-dev-codelabs-site
+          git remote add upstream git@github.com:SolaceDev/solace-dev-codelabs-site.git
+          git push upstream master
+      # - name: Push the changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{secrets.API_TOKEN}}
+      #     repository: SolaceDev/solace-dev-codelabs-site
