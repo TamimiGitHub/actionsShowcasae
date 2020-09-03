@@ -13,10 +13,14 @@ jobs:
           repository: SolaceDev/solace-dev-codelabs-site
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit the files
+      - name: Update submodule
         run: |
-          git remote -v
           git submodule update --remote
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git status
+          git add .
+          git commit -m "update submodule from github actions"
+      - name: Push the changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{secrets.API_TOKEN}}
