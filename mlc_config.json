@@ -1,0 +1,8 @@
+{
+  "ignorePatterns": [
+    {
+      "pattern": "/solace-dev-samples/g"
+    }
+  ],
+  "aliveStatusCodes": [400]
+}
