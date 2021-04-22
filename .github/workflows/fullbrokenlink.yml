@@ -18,9 +18,9 @@ jobs:
         run: |
         # npm install
         # npm run build
-        node -v
-        pwd
-        ls
+          node -v
+          pwd
+          ls
 
       - name: Check broken links in html files
         uses: ruzickap/action-my-broken-link-checker@v1
