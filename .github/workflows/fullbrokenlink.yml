@@ -10,7 +10,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.0.7
+        id: lychee
         with:
-          args: --verbose --no-progress *.md *.js *.html
+          args: --verbose --no-progress *.md /public/*.html
       - name: Fail if there were link errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
