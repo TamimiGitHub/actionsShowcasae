@@ -25,5 +25,4 @@ jobs:
       - name: Check broken links in html files
         uses: ruzickap/action-my-broken-link-checker@v1.0.3
         with:
-          url: https://solace.dev/
           pages_path: ./public/
