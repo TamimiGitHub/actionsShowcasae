@@ -13,5 +13,11 @@ jobs:
         id: lychee
         with:
           args: https://www.solace.dev/
+      - name: Create Issue From File
+        uses: peter-evans/create-issue-from-file@v2
+        with:
+          title: Link Checker Report
+          content-filepath: ./lychee/out.md
+          labels: report, automated issue
       - name: Fail if there were link errors
         run: exit ${{ steps.lychee.outputs.exit_code }}
