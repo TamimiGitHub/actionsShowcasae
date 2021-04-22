@@ -9,20 +9,21 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Set Node.js
-        uses: actions/setup-node@master
-        with:
-          node-version: 12.16
+      # - name: Set Node.js
+      #   uses: actions/setup-node@master
+      #   with:
+      #     node-version: 12.16
 
-      - name: Install dependencies
-        run: |
-          # npm install
-          # npm run build
-          node -v
-          pwd
-          ls
+      # - name: Install dependencies
+      #   run: |
+      #     # npm install
+      #     # npm run build
+      #     node -v
+      #     pwd
+      #     ls
 
       - name: Check broken links in html files
         uses: ruzickap/action-my-broken-link-checker@v1.0.3
         with:
+          url: https://solace.dev/
           pages_path: ./public/
