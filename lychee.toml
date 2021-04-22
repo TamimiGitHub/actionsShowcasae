@@ -2,7 +2,7 @@
 ### Display
 ###
 # Verbose program output
-verbose = false
+verbose = true
 
 # Show progress
 progress = false
@@ -50,7 +50,7 @@ headers = []
 ### Exclusions
 ###
 # Exclude URLs from checking (supports regex)
-exclude = ["data:image/*", "/*googletagmanager*/", "/*w3*/"]
+exclude = ["data:image/*", "https://www.googletagmanager.com/*", "http://www.w3.org/*"]
 
 include = []
 
