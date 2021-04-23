@@ -12,7 +12,7 @@ jobs:
         uses: lycheeverse/lychee-action@v1.0.7
         id: lychee
         with:
-          args: https://codelabs.solace.dev/
+          args: http://solace.com/
       - name: Create Issue From File
         uses: peter-evans/create-issue-from-file@v2
         with:
