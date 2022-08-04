@@ -12,5 +12,5 @@ jobs:
       - uses: harupy/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-        with:
-          filename: comment.md
+        # with:
+        #   filename: comment.md
