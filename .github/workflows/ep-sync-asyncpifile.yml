@@ -1,4 +1,4 @@
-name: Trigger Jenkins job
+name: Sync AsyncAPI file with EP
 on:
   push: 
     branches: [ master ]
