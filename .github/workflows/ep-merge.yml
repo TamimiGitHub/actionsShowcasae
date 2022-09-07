@@ -1,10 +1,31 @@
-name: Trigger Jenkins job
+name: Process post merge
 on:
   push: 
     branches: [ master ]
 
 jobs:
+  import-asyncapi-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Import AsyncAPI spec file to EP
+        run: echo "Importing file"
+
+  sync-asyncapi-with-ep:
+    needs: import-asyncapi-file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync AsyncAPI spec file with EP
+        run: echo "Synching file with EP"
+  
+  commit-file:
+    needs: sync-asyncapi-with-ep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Committing AsyncAPI spec file into repo
+        run: echo "Commit file back to repo"
+
   trigger-jenkins:
+    needs: commit-file
     runs-on: ubuntu-latest
     steps:
       - name: REST call to Jenkins
