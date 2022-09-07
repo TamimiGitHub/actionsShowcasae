@@ -1,0 +1,23 @@
+name: Validate AsyncaPI spec file
+on:
+  pull_request: 
+    branches: [ master ]
+
+jobs:
+  context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: validate asyncapi spec file
+        run: echo "validating file"
+  checkmode-import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: attempt an import to EP
+        run: echo "attempting to import the file to EP"

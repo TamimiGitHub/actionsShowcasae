@@ -1,0 +1,11 @@
+name: Trigger Jenkins job
+on:
+  push: 
+    branches: [ master ]
+
+jobs:
+  sync-asyncapi-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync asyncAPI file with EP
+        run: echo "synching asyncapi file"

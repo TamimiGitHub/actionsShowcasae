@@ -1,0 +1,18 @@
+name: Trigger Jenkins job
+on:
+  push: 
+    branches: [ master ]
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+    steps:
+      - name: REST call to Jenkins
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://${{ secrets.JENKINS_HOST }}/job/build-awx-asyncapi-rest/buildWithParameters'
+          method: 'POST'
+          username: ${{ secrets.JENKINS_USER }}
+          password: ${{ secrets.JENKINS_PASSWORD }}
+          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+          data: '{"REPO_HTTP_URL": "value_1", "REPO_BRANCH": "value_2", "ASYNCAPI_FILE": "value_2", "BUILD_ENV": "value_2"}'
