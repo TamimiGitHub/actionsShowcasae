@@ -35,6 +35,7 @@ jobs:
             asyncapi validate ${changed_file} &>> output.txt
             
             if grep -q "ValidationError" "output.txt"; then
+              echo "Invalid AsyncAPI file"
               exit 1
             fi
 
