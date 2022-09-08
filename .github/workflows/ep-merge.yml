@@ -11,22 +11,16 @@ jobs:
   asyncapi-present:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          CONTEXT: ${{toJson(github)}}
-        run: | 
-          echo "Repo: ${{github.event.repository.html_url}}"
-      
       - name: Install asycnapi cli
         run: npm install -g @asyncapi/cli 
           
     # Get all files in commit
-      - id: async_spec_present
+      - id: files
         uses: jitterbit/get-changed-files@v1
 
       - name: Check if AsycnAPI file in commit
         run: |
-          for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
+          for changed_file in ${{ steps.files.outputs.all }}; do
             asyncapi validate ${changed_file} &>> output.txt
 
             if grep -q "successfully validated!" "output.txt"; then
