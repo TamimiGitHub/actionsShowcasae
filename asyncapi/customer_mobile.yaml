@@ -85,24 +85,35 @@ channels:
               - acme-retail/store-ops/retail-order/online-cancelled/v1/*/*/*
               accessType: exclusive
     parameters:
-      identification_0_1_0:
+      retail_order_verb:
         schema:
           type: string
           enum:
           - one
           - two
-        x-enum-id: 7y0xelw8rk6
-        x-enum-version-id: '09hnh0538sl'
-        x-enum-version: 0.1.0
-        x-enum-name: identification
-        x-enum-version-displayname: identification0.1.0
-        x-enum-state-id: '1'
-        x-parameter-name: identification
+      store_location:
+        schema:
+          type: string
+          enum:
+          - NY
+          - CA
+      customer_id:
+        schema:
+          type: string
+          enum:
+          - one
+          - two
+      order_id:
+        schema:
+          type: string
+          enum:
+          - one
+          - two
 asyncapi: 2.0.0
 info:
   title: acme-retail-customer-mobile
   description: AsyncAPI for Customer Facing Mobile Application
-  version: 0.1.0
+  version: 0.2.0
   x-event-api-state-id: '1'
   x-event-api-state-name: DRAFT
   x-application-domain-id: 9n3oj6yfxm3
