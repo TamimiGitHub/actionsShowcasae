@@ -16,6 +16,8 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+
+      - name: List files
         run: find . -mindepth 3 -maxdepth 3 -type d
 
       - name: Validate asyncapi spec file
