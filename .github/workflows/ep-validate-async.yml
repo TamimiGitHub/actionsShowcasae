@@ -33,10 +33,9 @@ jobs:
         run: |
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
             asyncapi validate ${changed_file} >> output.txt
-            if grep -q "successfully validateds!" "output.txt"; then
+            if grep -q "successfully validated!" "output.txt"; then
               export ASYNCAPI_FILE_PATH=${changed_file}
             fi
-            env
           done
 
       - name: Cancel Workflow if no asyncAPI file present in PR
