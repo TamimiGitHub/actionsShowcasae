@@ -24,8 +24,8 @@ jobs:
             asyncapi validate ${changed_file} &>> output.txt
 
             if grep -q "successfully validated!" "output.txt"; then
-              export ASYNCAPI_FILE_PATH=${changed_file}
-              export CANCEL_WORKFLOW='false'
+              echo "ASYNCAPI_FILE_PATH=${changed_file}" >> $GITHUB_ENV
+              echo "CANCEL_WORKFLOW=false" >> $GITHUB_ENV
             fi
           done
       - name: Cancel Workflow if no asyncAPI file present in PR

@@ -22,7 +22,8 @@ jobs:
             asyncapi validate ${changed_file} &>> output.txt
 
             if grep -q "successfully validated!" "output.txt"; then
-              export CANCEL_WORKFLOW=false
+              echo "YOLO"
+              echo "CANCEL_WORKFLOW=false" >> $GITHUB_ENV
             fi
           done
       - name: Should cancel?
