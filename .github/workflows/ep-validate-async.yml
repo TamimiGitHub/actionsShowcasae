@@ -40,7 +40,7 @@ jobs:
           done
 
       - name: Cancel Workflow if no asyncAPI file present in PR
-        if: contains($ASYNCAPI_FILE_PATH, none )
+        if: contains(env.ASYNCAPI_FILE_PATH, none )
         uses: andymckay/cancel-action@0.2
 
       - name: Attempt an import to EP
