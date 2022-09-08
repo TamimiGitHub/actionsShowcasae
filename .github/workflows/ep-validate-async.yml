@@ -22,12 +22,12 @@ jobs:
             asyncapi validate ${changed_file} &>> output.txt
 
             if grep -q "successfully validated!" "output.txt"; then
-              export CANCEL_WORKFLOW='false'
+              export CANCEL_WORKFLOW=false
             fi
           done
       - name: Should cancel?
         run: echo "$CANCEL_WORKFLOW"
-        
+
       - name: Cancel Workflow if no asyncAPI file present in PR
         if: env.CANCEL_WORKFLOW == 'true' 
         uses: andymckay/cancel-action@0.2
