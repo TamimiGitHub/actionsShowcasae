@@ -15,9 +15,11 @@ jobs:
         env:
           CONTEXT: ${{toJson(github)}}
         run: | 
-          echo "Repo --> ${{ github.repository }}"
-          echo "REPO_BRANCH --> ${{ github.base_ref }}"
-          echo "$CONTEXT"
+          echo "Repo --> ${{ github.event.base.repo.html_url }}"
+          echo "REPO_BRANCH --> ${{ github.ref_name }}"
+      
+      - name: Install asycnapi cli
+        run: npm install -g @asyncapi/cli 
           
     # Get all files in commit
       - id: async_spec_present
@@ -58,9 +60,6 @@ jobs:
     needs: asyncapi-present
     runs-on: ubuntu-latest
     steps:
-      - name: Install asycnapi cli
-        run: npm install -g @asyncapi/cli 
-
       - name: REST call to Jenkins
         uses: fjogeleit/http-request-action@v1
         with:
