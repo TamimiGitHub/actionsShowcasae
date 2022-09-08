@@ -46,14 +46,13 @@ jobs:
 
       - name: Fail if asyncapi file was invalid
         if: env.INVALID_ASYNCAPI == 'true' 
-        uses: actions/github-script@v3
-        with:
-          script: |
-              core.setFailed('Invalid asyncAPI file')
+        run: |
+          echo "invalid AsyncAPI file"
+          exit 1
               
-      # - name: Cancel Workflow if no asyncAPI file present in PR
-      #   if: env.ASYNCAPI_FILE_PATH == 'none' 
-      #   uses: andymckay/cancel-action@0.2
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: env.ASYNCAPI_FILE_PATH == 'none' 
+        uses: andymckay/cancel-action@0.2
 
       # Import spec file to EP in checkmode
       - name: Attempt an import to EP
