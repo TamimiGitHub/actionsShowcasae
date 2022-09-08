@@ -18,7 +18,7 @@ jobs:
 
       - name: Check if AsycnAPI file in commit
         run: |
-          for changed_file in ${{ steps.files.outputs.all }}; dos
+          for changed_file in ${{ steps.files.outputs.all }}; do
             asyncapi validate ${changed_file} &>> output.txt
 
             if grep -q "successfully validated!" "output.txt"; then
