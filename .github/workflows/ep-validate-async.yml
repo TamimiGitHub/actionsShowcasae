@@ -5,6 +5,7 @@ on:
 
 env:
   ASYNCAPI_FILE_PATH: "none"
+  INVALID_ASYNCAPI: 'false'
 
 jobs:
   validate-asyncapi:
@@ -24,15 +25,20 @@ jobs:
       - name: Install asycnapi cli
         run: npm install -g @asyncapi/cli 
 
-      # Check if a valid asyncapi file is in the PRs
+      # Get all files in PR
       - id: async_spec_present
         uses: jitterbit/get-changed-files@v1
 
-      # Validate the asyncAPI file against EP best practices
+      # Check if AsyncAPI file in PR. If present, validate it
       - name: Validate asyncapi spec file
         run: |
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
             asyncapi validate ${changed_file} >> output.txt
+            
+            if grep -q "ValidationError!" "output.txt"; then
+              export INVALID_ASYNCAPI='true'
+            fi
+
             if grep -q "successfully validated!" "output.txt"; then
               export ASYNCAPI_FILE_PATH=${changed_file}
             fi
@@ -42,6 +48,14 @@ jobs:
         if: env.ASYNCAPI_FILE_PATH == 'none' 
         uses: andymckay/cancel-action@0.2
 
+      - name: Fail if asyncapi file was invalid
+        if: env.INVALID_ASYNCAPI == 'true' 
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Invalid asyncAPI file')
+      
+      # Import spec file to EP in checkmode
       - name: Attempt an import to EP
         run: echo "attempting to import the file to EP"
         
