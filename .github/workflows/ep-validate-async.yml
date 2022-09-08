@@ -3,23 +3,35 @@ on:
   pull_request: 
     branches: [ master ]
 
+env:
+  ASYNCAPI_FILE_PATH: "temp"
+
 jobs:
-  validate:
+  validate-asyncapi:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
 
       - name: Checkout Current Branch
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
+      
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+      
+      # Check if a valid asyncapi file is in the PRs
+      - id: async_spec_present
+        uses: jitterbit/get-changed-files@v1
+      - run: |
+          npm install -g @asyncapi/cli
+          for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
+            echo "${changed_file}"
+            asyncapi validate ${changed_file}
+          done
 
-      - name: List files
-        run: find . -mindepth 3 -maxdepth 3 -type d
-
+      # Validate the asyncAPI file against best practices
       - name: Validate asyncapi spec file
         run: echo "validating file"
 
