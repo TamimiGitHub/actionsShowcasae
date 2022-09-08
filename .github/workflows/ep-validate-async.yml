@@ -32,13 +32,9 @@ jobs:
       - name: Validate asyncapi spec file
         run: |
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
-            asyncapi validate ${changed_file} >> output.txt
-            
-            echo "YOLO"
-            cat output.txt
+            asyncapi validate ${changed_file} &>> output.txt
             
             if grep -q "ValidationError" "output.txt"; then
-              echo "YOLO ValidationError"
               exit 1
             fi
 
