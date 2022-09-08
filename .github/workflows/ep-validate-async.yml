@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 
 env:
-  ASYNCAPI_FILE_PATH: "temp"
+  ASYNCAPI_FILE_PATH: "none"
 
 jobs:
   validate-asyncapi:
@@ -27,15 +27,22 @@ jobs:
       # Check if a valid asyncapi file is in the PRs
       - id: async_spec_present
         uses: jitterbit/get-changed-files@v1
-      - run: |
+
+      # Validate the asyncAPI file against EP best practices
+      - name: Validate asyncapi spec file
+        run: |
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
-            cat ${changed_file}
-            asyncapi validate ${changed_file}
+            asyncapi validate ${changed_file} >> output.txt
+            if grep -q "successfully validated!" "output.txt"; then
+              export ASYNCAPI_FILE_PATH=${changed_file}
+            fi
+            env
           done
 
-      # Validate the asyncAPI file against best practices
-      - name: Validate asyncapi spec file
-        run: echo "validating file"
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: ASYNCAPI_FILE_PATH == 'none'
+        uses: andymckay/cancel-action@0.2
 
       - name: Attempt an import to EP
         run: echo "attempting to import the file to EP"
+        
