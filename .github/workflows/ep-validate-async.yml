@@ -34,7 +34,7 @@ jobs:
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
             asyncapi validate ${changed_file} >> output.txt
             
-            if grep -q "ValidationError!" "output.txt"; then
+            if grep -q "ValidationError" "output.txt"; then
               exit 1
             fi
 
