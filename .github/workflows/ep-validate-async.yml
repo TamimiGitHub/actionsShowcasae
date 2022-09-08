@@ -21,13 +21,15 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       
+      - name: Install asycnapi cli
+        run: npm install -g @asyncapi/cli 
+
       # Check if a valid asyncapi file is in the PRs
       - id: async_spec_present
         uses: jitterbit/get-changed-files@v1
       - run: |
-          npm install -g @asyncapi/cli
           for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
-            echo "${changed_file}"
+            cat ${changed_file}
             asyncapi validate ${changed_file}
           done
 
