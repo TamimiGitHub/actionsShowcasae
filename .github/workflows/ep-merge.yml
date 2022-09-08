@@ -3,6 +3,10 @@ on:
   push: 
     branches: [ master ]
 
+env:
+  ASYNCAPI_FILE_PATH: 'none'
+  CANCEL_WORKFLOW: 'true'
+
 jobs:
   import-asyncapi-file:
     runs-on: ubuntu-latest
@@ -16,18 +20,37 @@ jobs:
     steps:
       - name: Sync AsyncAPI spec file with EP
         run: echo "Synching file with EP"
-  
-  commit-file:
-    needs: sync-asyncapi-with-ep
-    runs-on: ubuntu-latest
-    steps:
       - name: Committing AsyncAPI spec file into repo
         run: echo "Commit file back to repo"
-
+  
+  # Trigger awx Jenkins job if an asyncapi spec file is present in commit merge
   trigger-jenkins:
-    needs: commit-file
+    needs: import-asyncapi-file
     runs-on: ubuntu-latest
     steps:
+      - name: Install asycnapi cli
+        run: npm install -g @asyncapi/cli 
+
+    # Get all files in commit
+      - id: async_spec_present
+        uses: jitterbit/get-changed-files@v1
+
+    # Check if AsyncAPI file in commit. If present, trigger Jenkins job with asycnAPI file
+      - name: Check if AsycnAPI file in commit
+        run: |
+          for changed_file in ${{ steps.async_spec_present.outputs.all }}; do
+            asyncapi validate ${changed_file} &>> output.txt
+
+            if grep -q "successfully validated!" "output.txt"; then
+              export ASYNCAPI_FILE_PATH=${changed_file}
+              export CANCEL_WORKFLOW='false'
+            fi
+          done
+      
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: env.CANCEL_WORKFLOW == 'true' 
+        uses: andymckay/cancel-action@0.2
+
       - name: REST call to Jenkins
         uses: fjogeleit/http-request-action@v1
         with:
@@ -36,4 +59,4 @@ jobs:
           username: ${{ secrets.JENKINS_USER }}
           password: ${{ secrets.JENKINS_PASSWORD }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
-          data: '{"REPO_HTTP_URL": "value_1", "REPO_BRANCH": "value_2", "ASYNCAPI_FILE": "value_2", "BUILD_ENV": "value_2"}'
+          data: '{"REPO_HTTP_URL": ${{ github.event.base.repo.html_url }}, "REPO_BRANCH": ${{ github.base_ref}}, "ASYNCAPI_FILE": ${{env.ASYNCAPI_FILE_PATH}}, "BUILD_ENV": "test"}'
