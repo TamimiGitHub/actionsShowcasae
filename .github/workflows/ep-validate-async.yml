@@ -35,6 +35,8 @@ jobs:
             asyncapi validate ${changed_file} >> output.txt
             
             echo "YOLO"
+            cat output.txt
+            
             if grep -q "ValidationError" "output.txt"; then
               echo "YOLO ValidationError"
               exit 1
