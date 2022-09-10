@@ -5,7 +5,7 @@ on:
 
 env:
   ASYNCAPI_FILE_PATH: 'none'
-  CANCEL_WORKFLOW: 'true'
+  CANCEL_WORKFLOW: 'false'
 
 jobs:
   asyncapi-present:
