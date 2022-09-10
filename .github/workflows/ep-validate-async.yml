@@ -25,7 +25,7 @@ jobs:
             then
               asyncapi validate ${changed_file} &> check.txt
               # Check if the file is an asyncapi spec
-              if grep -q -v "missing" "check.txt"; then
+              if ! grep -q "field is missing." check.txt; then
                 asyncapiFiles+=("$changed_file")
               fi
             fi

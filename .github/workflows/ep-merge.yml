@@ -27,7 +27,7 @@ jobs:
             then
               asyncapi validate ${changed_file} &> check.txt
               # Check if the file is an asyncapi spec
-              if grep -q -v "missing" "check.txt"; then
+              if ! grep -q "field is missing." check.txt; then
                 asyncapiFiles+=("$changed_file")
               fi
             fi
@@ -40,7 +40,7 @@ jobs:
           fi
 
       - name: Cancel Workflow if no asyncAPI file present in PR
-        if: env.CANCEL_WORKFLOW
+        if: env.CANCEL_WORKFLOW==true
         uses: andymckay/cancel-action@0.2
 
   import-asyncapi-file:
