@@ -18,16 +18,27 @@ jobs:
       - id: files
         uses: jitterbit/get-changed-files@v1
 
-      - name: Check if AsycnAPI file in commit
+      - name: Check if an AsycnAPI file is in commit
         run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            asyncapi validate ${changed_file} &>> output.txt
-
-            if grep -q "successfully validated!" "output.txt"; then
-              echo "ASYNCAPI_FILE_PATH=${changed_file}" >> $GITHUB_ENV
-              echo "CANCEL_WORKFLOW=false" >> $GITHUB_ENV
+          asyncapiFiles=()
+          for changed_file in ${{ steps.files.outputs.all }}
+          do
+            if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
+            then
+              asyncapi validate ${changed_file} &> check.txt
+              # Check if the file is an asyncapi spec
+              if grep -q -v "missing" "check.txt"; then
+                asyncapiFiles+=("$changed_file")
+              fi
             fi
           done
+
+          if [ ${#asyncapiFiles[@]} -eq 0 ]; then
+            echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
+          fi
+      - name: Should cancel?
+        run: echo "${{env.CANCEL_WORKFLOW}}"
+
       - name: Cancel Workflow if no asyncAPI file present in PR
         if: env.CANCEL_WORKFLOW == 'true' 
         uses: andymckay/cancel-action@0.2
