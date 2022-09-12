@@ -34,7 +34,7 @@ jobs:
               # Check if the file is an asyncapi spec
               if ! grep -q "field is missing." check.txt; then
                 asyncapiFiles+=("$changed_file")
-                echo "This is an asyncapi file"
+                echo "ASYNCAPI_FILE_PATH=${changed_file}" >> $GITHUB_ENV
               fi
             fi
           done
