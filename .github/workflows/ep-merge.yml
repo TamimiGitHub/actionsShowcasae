@@ -47,6 +47,8 @@ jobs:
         if: env.CANCEL_WORKFLOW == 'true'
         uses: andymckay/cancel-action@0.2
       
+      - id: Set AsyncAPI path variable
+        run: echo "::set-output name=ASYNCAPI_FILE_PATH::$ASYNCAPI_FILE_PATH"
 
   import-asyncapi-file:
     needs: asyncapi-present
@@ -77,4 +79,4 @@ jobs:
           username: ${{ secrets.JENKINS_USER }}
           password: ${{ secrets.JENKINS_PASSWORD }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
-          data: '{"parameter": [{"REPO_HTTP_URL": ${{ github.event.repository.html_url }}, "REPO_BRANCH": ${{ github.ref_name}}, "ASYNCAPI_FILE": ${{env.ASYNCAPI_FILE_PATH}}, "BUILD_ENV": "test"}]}'
+          data: '{"parameter": [{"REPO_HTTP_URL": ${{ github.event.repository.html_url }}, "REPO_BRANCH": ${{ github.ref_name}}, "ASYNCAPI_FILE": ${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}}, "BUILD_ENV": "test"}]}'
