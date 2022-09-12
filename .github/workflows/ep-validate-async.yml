@@ -78,6 +78,7 @@ jobs:
               asyncapi validate ${changed_file} &> check.txt
               # Check if the file is an asyncapi spec
               if grep -q -v "ValidationError" "check.txt"; then
+                cat check.txt
                 exit 1
               fi
             fi
