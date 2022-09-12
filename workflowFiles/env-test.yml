@@ -18,13 +18,14 @@ jobs:
         run: |
           echo "this is step 2 of job1"
           echo "TEMPPATH=yolo" >> $GITHUB_ENV
+          echo $TEMPPATH
 
-      # - id: set-path
-      #   run: |
-      #     echo "::set-output name=TEMPPATH::$TEMPPATH"
+      - id: set-path
+        run: |
+          echo "::set-output name=TEMPPATH::$TEMPPATH"
     outputs:
-      # tamimiPath: ${{steps.set-path.outputs.TEMPPATH}}
-      tamimiPath: $TEMPPATH
+      tamimiPath: ${{steps.set-path.outputs.TEMPPATH}}
+      # tamimiPath: $TEMPPATH
   job2:
     needs: job1
     runs-on: ubuntu-latest

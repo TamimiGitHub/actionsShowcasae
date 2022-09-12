@@ -49,6 +49,8 @@ jobs:
       
       - id: set-async-path-var
         run: echo "::set-output name=ASYNCAPI_FILE_PATH::$ASYNCAPI_FILE_PATH"
+    outputs:
+      ASYNCAPI_FILE_PATH: ${{steps.set-async-path-var.outputs.ASYNCAPI_FILE_PATH}}
 
   import-asyncapi-file:
     needs: asyncapi-present
