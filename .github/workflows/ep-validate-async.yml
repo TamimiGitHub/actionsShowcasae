@@ -76,9 +76,9 @@ jobs:
             if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
             then
               asyncapi validate ${changed_file} &> check.txt
+              cat check.txt
               # Check if the file is an asyncapi spec
-              if grep -q -v "ValidationError" "check.txt"; then
-                cat check.txt
+              if grep -q "ValidationError" "check.txt"; then
                 exit 1
               fi
             fi
