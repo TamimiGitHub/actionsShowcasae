@@ -43,9 +43,14 @@ jobs:
             echo "CANCEL_WORKFLOW='true'" >> $GITHUB_ENV
           fi
           cat $GITHUB_ENV
+
+      - name: Should cancel?
+        run: echo "the value of GITHUB_ENV is $GITHUB_ENV and CANCEL_WORKFLOW is $CANCEL_WORKFLOW"
+
       - name: Cancel Workflow if no asyncAPI file present in PR
         if: env.CANCEL_WORKFLOW=='true'
         uses: andymckay/cancel-action@0.2
+      
 
   import-asyncapi-file:
     needs: asyncapi-present
