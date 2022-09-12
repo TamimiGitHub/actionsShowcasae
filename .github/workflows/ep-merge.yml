@@ -5,7 +5,7 @@ on:
 
 env:
   ASYNCAPI_FILE_PATH: 'none'
-  CANCEL_WORKFLOW: 'false'
+  CANCEL_WORKFLOW: ${{ false }}
 
 jobs:
   asyncapi-present:
@@ -40,7 +40,7 @@ jobs:
           done
           if [ ${#asyncapiFiles[@]} -eq 0 ]; then
             echo "Cancel workflow. No file found!"
-            echo "CANCEL_WORKFLOW='true'" >> $GITHUB_ENV
+            echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
           fi
           cat $GITHUB_ENV
 
@@ -48,7 +48,7 @@ jobs:
         run: echo "the value of GITHUB_ENV is $GITHUB_ENV and CANCEL_WORKFLOW is $CANCEL_WORKFLOW"
 
       - name: Cancel Workflow if no asyncAPI file present in PR
-        if: env.CANCEL_WORKFLOW=='true'
+        if: env.CANCEL_WORKFLOW == 'true'
         uses: andymckay/cancel-action@0.2
       
 
