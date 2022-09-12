@@ -27,6 +27,7 @@ jobs:
       tamimiPath: ${{steps.set-path.outputs.TEMPPATH}}
       # tamimiPath: $TEMPPATH
   job2:
+    needs: job1
     runs-on: ubuntu-latest
     steps:
       - name: step one
