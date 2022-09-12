@@ -47,7 +47,7 @@ jobs:
         if: env.CANCEL_WORKFLOW == 'true'
         uses: andymckay/cancel-action@0.2
       
-      - id: Set AsyncAPI path variable
+      - id: set-async-path-var
         run: echo "::set-output name=ASYNCAPI_FILE_PATH::$ASYNCAPI_FILE_PATH"
 
   import-asyncapi-file:
