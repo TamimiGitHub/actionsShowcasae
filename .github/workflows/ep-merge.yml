@@ -28,9 +28,10 @@ jobs:
               echo "$changed_file"
               asyncapi validate ${changed_file} &> check.txt
               # Check if the file is an asyncapi spec
-
+              pwd 
+              ls
+              cat $changed_file
               cat check.txt
-
               if ! grep -q "field is missing." check.txt; then
                 asyncapiFiles+=("$changed_file")
                 echo "This is an asyncapi file"
