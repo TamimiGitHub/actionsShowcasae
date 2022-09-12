@@ -25,20 +25,22 @@ jobs:
           do
             if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
             then
+              echo "$changed_file"
               asyncapi validate ${changed_file} &> check.txt
               # Check if the file is an asyncapi spec
+
               if ! grep -q "field is missing." check.txt; then
                 asyncapiFiles+=("$changed_file")
+                echo "This is an asyncapi file"
               fi
             fi
           done
-
           echo "YOLO files $asyncapiFiles"
-
           if [ ${#asyncapiFiles[@]} -eq 0 ]; then
+            echo "Cancle workflow. No file found!"
             echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
           fi
-
+          echo "CANCEL_WORKFLOW: $CANCEL_WORKFLOW"
       - name: Cancel Workflow if no asyncAPI file present in PR
         if: env.CANCEL_WORKFLOW==true
         uses: andymckay/cancel-action@0.2
