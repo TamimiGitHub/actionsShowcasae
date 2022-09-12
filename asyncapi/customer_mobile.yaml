@@ -85,19 +85,30 @@ channels:
               - acme-retail/store-ops/retail-order/online-cancelled/v1/*/*/*
               accessType: exclusive
     parameters:
-      identification_0_1_0:
+      retail_order_verb:
         schema:
           type: string
           enum:
           - one
           - two
-        x-enum-id: 7y0xelw8rk6
-        x-enum-version-id: '09hnh0538sl'
-        x-enum-version: 0.1.0
-        x-enum-name: identification
-        x-enum-version-displayname: identification0.1.0
-        x-enum-state-id: '1'
-        x-parameter-name: identification
+      store_location:
+        schema:
+          type: string
+          enum:
+          - one
+          - two
+      customer_id:
+        schema:
+          type: string
+          enum:
+          - one
+          - two
+      order_id:
+        schema:
+          type: string
+          enum:
+          - one
+          - two
 asyncapi: 2.0.0
 info:
   title: acme-retail-customer-mobile
