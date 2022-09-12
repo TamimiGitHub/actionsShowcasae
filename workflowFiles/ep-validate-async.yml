@@ -1,3 +1,12 @@
+# This workflow will be triggered on every PR to validate the AsyncAPI spec file 
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Validation only runs if an AsyncAPI spec file is present in the commit
+
 name: Validate AsyncaPI spec file
 on:
   pull_request: 
