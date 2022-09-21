@@ -7,6 +7,9 @@
 
 # Validation only runs if an AsyncAPI spec file is present in the commit
 
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# CLI_SOLACE_CLOUD_TOKEN: your Solace Cloud Token
+
 name: Validate AsyncaPI spec file
 on:
   pull_request: 
@@ -79,7 +82,6 @@ jobs:
       # Validate AsyncAPI file
       - name: Validate asyncapi spec file using OS validator
         run: |
-          asyncapiFiles=()
           for changed_file in ${{ steps.async_spec_present.outputs.all }}
           do
             if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
@@ -90,10 +92,14 @@ jobs:
               if grep -q "ValidationError" "check.txt"; then
                 exit 1
               fi
+              echo "ASYNCAPI_FILE_PATH=${changed_file}" >> $GITHUB_ENV
             fi
           done
-      
+
       # Import spec file to EP in checkmode
-      - name: Attempt an import to EP
-        run: echo "attempting to import the file to EP"
+      - name: Attempt an import to EP in test mode
+        env: 
+          CLI_MODE: test_mode
+        run: |
+          npx @solace-labs/ep-async-api-importer -fp {{env.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
         

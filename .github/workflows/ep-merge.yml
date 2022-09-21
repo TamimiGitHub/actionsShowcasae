@@ -13,6 +13,7 @@
 # JENKINS_HOST: your Jenkins host
 # JENKINS_USER: your Jenkins user
 # JENKINS_TOKEN: your Jenkins token
+# CLI_SOLACE_CLOUD_TOKEN: your Solace Cloud Token
 
 
 name: Process post merge
@@ -74,7 +75,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Import AsyncAPI spec file to EP
-        run: echo "Importing file"
+        run: |
+          npx @solace-labs/ep-async-api-importer -fp ${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
 
   sync-asyncapi-with-ep:
     needs: import-asyncapi-file

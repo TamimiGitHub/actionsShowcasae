@@ -1,4 +1,3 @@
----
 servers:
   test:
     url: test-env
@@ -32,7 +31,7 @@ components:
     PersonSchema_0_1_0:
       x-schema-version: 0.1.0
       x-schema-version-displayname: PersonSchema0.1.0
-      "$schema": http://json-schema.org/draft-07/schema#
+      $schema: 'http://json-schema.org/draft-07/schema#'
       x-schema-name: PersonSchema
       x-schema-version-id: jjfg2jkpco3
       x-schema-state-name: DRAFT
@@ -50,15 +49,14 @@ components:
           description: Age in years which must be equal to or greater than zero.
           type: integer
           minimum: 0
-      "$id": https://example.com/person.schema.json
+      $id: 'https://example.com/person.schema.json'
       x-schema-id: ac9c2o2tvz1
   messages:
     RegistrationEvent_0_1_0:
-      x-event-version-displayname: RegistrationEvent0.1.0
-      x-event-name: RegistrationEvent
-      x-event-id: elrp09gm4ae
+      x-ep-event-version-displayname: RegistrationEvent0.1.0
+      x-ep-event-id: elrp09gm4ae
       payload:
-        "$ref": "#/components/schemas/PersonSchema_0_1_0"
+        $ref: '#/components/schemas/PersonSchema_0_1_0'
       x-event-state-name: DRAFT
       description: RegistrationEvent
       schemaFormat: application/vnd.aai.asyncapi+json;version=2.0.0
@@ -67,49 +65,38 @@ components:
       x-event-state-id: '1'
       x-event-version: 0.1.0
 channels:
-  acme-retail/store-ops/retail-order/{retail_order_verb}/v1/{store_location}/{customer_id}/{order_id}:
+  'acme-retail/store-ops/retail-order/{retail_order_verb}/v1/{store_location}/{customer_id}/{order_id}':
+    x-ep-event-name: RegistrationEvent
     publish:
       message:
-        "$ref": "#/components/messages/RegistrationEvent_0_1_0"
+        $ref: '#/components/messages/RegistrationEvent_0_1_0'
       bindings:
         solace:
           bindingVersion: 0.2.0
           destinations:
-          - destinationType: queue
-            deliveryMode: persistent
-            queue:
-              name: NON-DEFAULT.mobileapp.retail-order.updates.receive
-              topicSubscriptions:
-              - acme-retail/store-ops/retail-order/online-fulfilled/v1/*/*/*
-              - acme-retail/store-ops/retail-order/online-paid/v1/*/*/*
-              - acme-retail/store-ops/retail-order/online-cancelled/v1/*/*/*
-              accessType: exclusive
+            - destinationType: queue
+              deliveryMode: persistent
+              queue:
+                name: NON-DEFAULT.mobileapp.retail-order.updates.receive
+                topicSubscriptions:
+                  - acme-retail/store-ops/retail-order/online-fulfilled/v1/*/*/*
+                  - acme-retail/store-ops/retail-order/online-paid/v1/*/*/*
+                  - acme-retail/store-ops/retail-order/online-cancelled/v1/*/*/*
+                accessType: exclusive
     parameters:
       retail_order_verb:
         schema:
           type: string
-          enum:
-          - one
-          - two
       store_location:
         schema:
           type: string
-          enum:
-          - one
-          - two
       customer_id:
         schema:
           type: string
-          enum:
-          - one
-          - two
       order_id:
         schema:
           type: string
-          enum:
-          - one
-          - two
-asyncapi: 2.0.0
+asyncapi: 2.4.0
 info:
   title: acme-retail-customer-mobile
   description: AsyncAPI for Customer Facing Mobile Application
