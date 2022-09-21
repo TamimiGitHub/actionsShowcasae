@@ -76,7 +76,10 @@ jobs:
     steps:
       - name: Import AsyncAPI spec file to EP
         run: |
-          npx @solace-labs/ep-async-api-importer -fp {pwd}/${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
+          echo "YOLO"
+          ls
+          pwd
+          npx @solace-labs/ep-async-api-importer -fp ./${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
 
   sync-asyncapi-with-ep:
     needs: import-asyncapi-file

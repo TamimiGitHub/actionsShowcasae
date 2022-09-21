@@ -100,7 +100,7 @@ asyncapi: 2.4.0
 info:
   title: acme-retail-customer-mobile
   description: AsyncAPI for Customer Facing Mobile Application
-  version: 0.11.0
+  version: 0.12.0
   x-event-api-state-id: '1'
   x-event-api-state-name: DRAFT
   x-application-domain-id: 9n3oj6yfxm3
