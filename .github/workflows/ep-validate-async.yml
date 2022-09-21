@@ -99,8 +99,9 @@ jobs:
       # Import spec file to EP in checkmode
       - name: Attempt an import to EP in test mode
         env: 
-          CLI_MODE: test_mode
+          CLI_SOLACE_CLOUD_TOKEN: ${{ secrets.CLI_SOLACE_CLOUD_TOKEN }}
           CLI_IMPORT_CREATE_API_APPLICATION: true
+          CLI_MODE: test_mode
         run: |
           npx @solace-labs/ep-async-api-importer -fp ./$ASYNCAPI_FILE_PATH -d "${{ secrets.SOLACE_APPLICATION_DOMAIN }}"
         
