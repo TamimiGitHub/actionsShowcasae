@@ -65,7 +65,7 @@ components:
       x-event-state-id: '1'
       x-event-version: 0.1.0
 channels:
-  'acme-retail/store-ops/retail-order/{retail_order_verb}/v1/{store_location}/{customer_id}/{order_id}':
+  'acme-retail/store-ops/retail-order/{retail_order_verb}/v1/{store_location}/{customer_id}/{order_id}/{product}':
     x-ep-event-name: RegistrationEvent
     publish:
       message:
@@ -94,6 +94,9 @@ channels:
         schema:
           type: string
       order_id:
+        schema:
+          type: string
+      product:
         schema:
           type: string
 asyncapi: 2.4.0
