@@ -80,6 +80,8 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Import AsyncAPI spec file to EP
+        env:
+          CLI_SOLACE_CLOUD_TOKEN: ${{ secrets.CLI_SOLACE_CLOUD_TOKEN }}
         run: |
           npx @solace-labs/ep-async-api-importer -fp ./${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
 
