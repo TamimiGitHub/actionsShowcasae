@@ -100,6 +100,7 @@ jobs:
       - name: Attempt an import to EP in test mode
         env: 
           CLI_MODE: test_mode
+          CLI_IMPORT_CREATE_API_APPLICATION: true
         run: |
           npx @solace-labs/ep-async-api-importer -fp ./{{env.ASYNCAPI_FILE_PATH}} -d "${{ secrets.SOLACE_APPLICATION_DOMAIN }}"
         
