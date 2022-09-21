@@ -75,12 +75,6 @@ jobs:
       - name: Install asycnapi cli
         run: npm install -g @asyncapi/cli@0.22.2
 
-      - name: List files and path
-        run: |
-          echo "YOLO"
-          pwd
-          ls
-
       # Get all files in PR
       - id: async_spec_present
         uses: jitterbit/get-changed-files@v1
