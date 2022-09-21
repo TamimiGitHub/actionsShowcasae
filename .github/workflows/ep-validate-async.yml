@@ -102,5 +102,5 @@ jobs:
           CLI_MODE: test_mode
           CLI_IMPORT_CREATE_API_APPLICATION: true
         run: |
-          npx @solace-labs/ep-async-api-importer -fp ./{{env.ASYNCAPI_FILE_PATH}} -d "${{ secrets.SOLACE_APPLICATION_DOMAIN }}"
+          npx @solace-labs/ep-async-api-importer -fp ./$ASYNCAPI_FILE_PATH -d "${{ secrets.SOLACE_APPLICATION_DOMAIN }}"
         
