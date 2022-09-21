@@ -74,11 +74,13 @@ jobs:
     needs: asyncapi-present
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+
       - name: Import AsyncAPI spec file to EP
         run: |
-          echo "YOLO"
-          ls
-          pwd
           npx @solace-labs/ep-async-api-importer -fp ./${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
 
   sync-asyncapi-with-ep:
