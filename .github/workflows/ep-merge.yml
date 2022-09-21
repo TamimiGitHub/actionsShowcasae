@@ -74,15 +74,9 @@ jobs:
     needs: asyncapi-present
     runs-on: ubuntu-latest
     steps:
-      - name: List files and path
-        run: |
-          echo "YOLO"
-          pwd
-          ls
-            
       - name: Import AsyncAPI spec file to EP
         run: |
-          npx @solace-labs/ep-async-api-importer -fp pwd/${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
+          npx @solace-labs/ep-async-api-importer -fp {pwd}/${{needs.asyncapi-present.outputs.ASYNCAPI_FILE_PATH}} -d ${{ secrets.SOLACE_APPLICATION_DOMAIN }}
 
   sync-asyncapi-with-ep:
     needs: import-asyncapi-file
