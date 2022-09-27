@@ -27,7 +27,7 @@ jobs:
             ref: ${{ github.ref }}
               
         - name: Install asycnapi cli
-          run: npm install -g @asyncapi/cli@0.24.1
+          run: npm install -g @asyncapi/cli@0.24.0
             
       # Get all files in commit
         - id: files
@@ -72,7 +72,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install asycnapi cli
-        run: npm install -g @asyncapi/cli@0.24.1
+        run: npm install -g @asyncapi/cli@0.24.0
 
       # Get all files in PR
       - id: async_spec_present
