@@ -27,7 +27,7 @@ jobs:
             ref: ${{ github.ref }}
               
         - name: Install asycnapi cli
-          run: npm install -g @asyncapi/cli 
+          run: npm install -g @asyncapi/cli@0.24.1
             
       # Get all files in commit
         - id: files
@@ -44,7 +44,6 @@ jobs:
                 # Check if the file is an asyncapi spec
                 if ! grep -q "field is missing." check.txt; then
                   asyncapiFiles+=("$changed_file")
-                  echo "This is an asyncapi file"
                 fi
               fi
             done
@@ -73,7 +72,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install asycnapi cli
-        run: npm install -g @asyncapi/cli@0.22.2
+        run: npm install -g @asyncapi/cli@0.24.1
 
       # Get all files in PR
       - id: async_spec_present
