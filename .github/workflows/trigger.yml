@@ -1,3 +1,13 @@
+# This workflow will trigger another workflow in another repo with payload passed as parameter
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# INFRA_REPO: the infrastructure repo in the form of <github_user>/<repo_name>
+
 name: Trigger Generate Implementation
 on:
   pull_request: 
@@ -13,5 +23,5 @@ jobs:
           curl -X POST -u "${{ github.actor }}:${{ github.token }}" \
             -H "Accept: application/vnd.github.everest-preview+json"  \
             -H "Content-Type: application/json" \
-            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            https://api.github.com/repos/${{ secrets.INFRA_REPO }}/dispatches \
             --data "{\"event_type\":\"trigger-event\",\"client_payload\":{\"id\":\"$id\", \"unit\":false,\"integration\":true}}"
