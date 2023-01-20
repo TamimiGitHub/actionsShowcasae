@@ -1,0 +1,41 @@
+name: Test PR
+on:
+  pull_request: 
+    branches: [ master ]
+
+env:
+  TEMPPATH: 'none'
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step one
+        run: |
+          echo "this is step 1 of job1"
+          echo $TEMPPATH
+      - name: step two
+        run: |
+          echo "this is step 2 of job1"
+          echo "TEMPPATH=yolo" >> $GITHUB_ENV
+          echo $TEMPPATH
+
+      - id: set-path
+        run: |
+          echo "::set-output name=TEMPPATH::$TEMPPATH"
+    outputs:
+      tamimiPath: ${{steps.set-path.outputs.TEMPPATH}}
+      # tamimiPath: $TEMPPATH
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: step one
+        run: |
+          echo "this is step 1 of job2"
+          echo $TEMPPATH
+      - name: step two
+        run: |
+          echo "this is step 2 of job2"
+          echo "needs.job1.outputs.tamimiPath"
+          echo ${{needs.job1.outputs.tamimiPath}}
