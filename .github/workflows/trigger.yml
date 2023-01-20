@@ -22,7 +22,7 @@ jobs:
       - name: Trigger generate implementation 
         run: |
           # Read AsyncAPI Spec file into variable
-          spec = cat asyncapi/pos-system.yaml
+          spec=`cat asyncapi/pos-system.yaml`
           curl -X POST -u "${{ github.actor }}:${{ secrets.WORKFLOW_PAT }}" \
             -H "Accept: application/vnd.github.everest-preview+json"  \
             -H "Content-Type: application/json" \
