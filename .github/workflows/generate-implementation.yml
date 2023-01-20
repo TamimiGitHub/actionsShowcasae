@@ -1,18 +1,18 @@
 # This workflow will be triggered via a repository dispatch 
-# The body of the POST request is accessed by ${{ github.event.<param>}} where param is the JSON body parameters
+# The body of the POST request is accessed by ${{ github.event.client_payload.<param>}} where param is the JSON body parameters
 # The event_type parameter should reflect the repository_dispatch type.
 
 # A sample POST payload looks like this:
 
 # {
 #     "event_type": "trigger-event",
-#     "param": {
+#     "client_payload": {
 #         "param1": "18273461237",
 #         "param2": "true"
 #     }
 # }
 
-# To trigger this workflow execution using CURL: 
+# Example trigger for this workflow execution using CURL: 
 
 # run: |
 #   id="962368b5c27b7ec5ecfcb4ed8f8c57adb52a8442"
@@ -40,7 +40,7 @@ env:
   # QUEUE_NAME: ${{ github.event.solace.queueName }}
   # ACCESS_TYPE: ${{ github.event.solace.accessType }}
   # SUB: ${{ github.event.solace.sub }}
-  SPEC: ${{ github.event.solace.asyncapi }}
+  SPEC: ${{ github.event.client_payload.asyncapi }}
 
 jobs:
   generate-implementation-file:
