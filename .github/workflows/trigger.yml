@@ -19,6 +19,9 @@ jobs:
   Trigger-Generate:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+
       - name: Trigger generate implementation 
         run: |
           # Read AsyncAPI Spec file into variable
