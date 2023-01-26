@@ -21,7 +21,11 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           dir_names: "true"
+          files: |
+            **/*.md
 
-      - name: list changed files
+      - name: List all changed files
         run: |
-          ls ${{steps.changed-files.outputs.modified_files}}
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
