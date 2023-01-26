@@ -24,4 +24,4 @@ jobs:
 
       - name: list changed files
         run: |
-          echo ${{steps.changed-files.outputs.modified_files}}
+          ls ${{steps.changed-files.outputs.modified_files}}
