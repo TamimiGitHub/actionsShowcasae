@@ -1,2 +1,5 @@
-other
 temp.sh
+.DS_Store
+node_modules
+*lock*
+temp/
