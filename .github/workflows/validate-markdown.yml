@@ -7,7 +7,10 @@ jobs:
   claat-export: 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout codelabs repo
+        uses: actions/checkout@v3
+        with:
+          path: codelabs
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
@@ -27,13 +30,14 @@ jobs:
       - name: Validate .md files against claat
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            cd $file
+            cd codelabs/$file
             ./export
           done
 
       - name: Checkout codelabs Site repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
+          path: codelabs-site
           repository: SolaceDev/solace-dev-codelabs-site
           submodules: recursive
           
@@ -44,9 +48,12 @@ jobs:
         
       - name: build site with new files
         run: | 
-          pwd
-          ls
           ls ../
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
+            cd codelabs-site/site/solace-dev-codelabs/$file
+            ./export
+          done
         
         
         
