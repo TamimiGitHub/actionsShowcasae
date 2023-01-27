@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout codelabs repo
         uses: actions/checkout@v2
-        with:
-          path: codelabs
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
