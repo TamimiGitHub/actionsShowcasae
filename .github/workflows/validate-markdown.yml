@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codelabs repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           path: codelabs
       - name: Setup Go
@@ -35,7 +35,7 @@ jobs:
           done
 
       - name: Checkout codelabs Site repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           path: codelabs-site
           repository: SolaceDev/solace-dev-codelabs-site
