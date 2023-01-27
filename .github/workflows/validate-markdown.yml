@@ -20,11 +20,35 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v35
         with:
+          dir_names: "true"
           files: |
-            **/*.md
+            markdown/*.md
 
-      - name: List all changed files
+      - name: Validate .md files against claat
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+            cd $file
+            ./export
           done
+
+      - name: Checkout codelabs Site repo
+        uses: actions/checkout@v2
+        with:
+          repository: SolaceDev/solace-dev-codelabs-site
+          submodules: recursive
+          
+      - name: Install node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.16.2
+        
+      - name: build site with new files
+        run: | 
+          pwd
+          ls
+          ls ../
+        
+        
+        
+        
+        
