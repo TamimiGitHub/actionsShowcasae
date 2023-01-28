@@ -20,10 +20,10 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v35
-        # with:
-        #   dir_names: "true"
-        #   files: |
-        #     markdown/**
+        with:
+          dir_names: "true"
+          files: |
+            markdown/**
       
       - name: List all changed files
         run: |
@@ -31,12 +31,6 @@ jobs:
             echo "$file was changed"
           done
           
-      - name: Run step if any file(s) in the markdown folder change
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
-        run: |
-          echo "One or more files in the markdown folder has changed."
-          echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
-
       # - name: Validate .md files against claat
       #   run: |
       #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
