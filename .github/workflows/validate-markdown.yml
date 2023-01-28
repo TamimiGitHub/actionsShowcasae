@@ -24,6 +24,12 @@ jobs:
           dir_names: "true"
           files: |
             markdown/*.md
+      
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files.outputs.all_changed_files }}"
 
       - name: Validate .md files against claat
         run: |
