@@ -23,7 +23,7 @@ jobs:
         with:
           dir_names: "true"
           files: |
-            markdown/**
+            markdown/*.md
       
       - name: List all changed files
         run: |
