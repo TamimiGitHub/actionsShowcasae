@@ -35,8 +35,8 @@ jobs:
       - name: Checkout codelabs Site repo
         uses: actions/checkout@v2
         with:
-          path: codelabs-site
           repository: SolaceDev/solace-dev-codelabs-site
+          path: codelabs-site
           submodules: recursive
           
       - name: Install node 12.x
