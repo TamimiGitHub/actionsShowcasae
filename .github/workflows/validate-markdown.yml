@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codelabs repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          path: codelabs
       # - name: Setup Go
       #   uses: actions/setup-go@v2
       #   with:
@@ -21,9 +23,9 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v35
         with:
-          dir_names: "true"
+          diff_relative: codelabs
           files: |
-            markdown/*.md
+            markdown/**
       
       - name: List all changed files
         run: |
