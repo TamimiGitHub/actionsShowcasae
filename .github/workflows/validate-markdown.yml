@@ -28,7 +28,10 @@ jobs:
       - name: Validate .md files against claat
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            cd codelabs/$file
+            echo "YOLO"
+            echo $file
+            cd $file
+            ls
             ./export
           done
 
@@ -46,7 +49,6 @@ jobs:
         
       - name: build site with new files
         run: | 
-          ls
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo $file
             # cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
