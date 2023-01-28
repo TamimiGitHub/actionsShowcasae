@@ -46,11 +46,12 @@ jobs:
         
       - name: build site with new files
         run: | 
-          ls ../
+          ls
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
-            cd codelabs-site/site/solace-dev-codelabs/$file
-            ./export
+            echo $file
+            # cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
+            # cd codelabs-site/site/solace-dev-codelabs/$file
+            # ./export
           done
         
         
