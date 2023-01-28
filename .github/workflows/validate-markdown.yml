@@ -22,7 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v35
         with:
           files: |
-            markdown/*.md
+            markdown/**
       
       - name: List all changed files
         run: |
