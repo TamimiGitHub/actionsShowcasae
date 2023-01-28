@@ -9,8 +9,6 @@ jobs:
     steps:
       - name: Checkout codelabs repo
         uses: actions/checkout@v2
-      - name: list files
-        run: ls
       # - name: Setup Go
       #   uses: actions/setup-go@v2
       #   with:
@@ -27,6 +25,12 @@ jobs:
         #   files: |
         #     markdown/**
       
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
+          
       - name: Run step if any file(s) in the markdown folder change
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
