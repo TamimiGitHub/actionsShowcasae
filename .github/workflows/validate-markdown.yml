@@ -29,10 +29,10 @@ jobs:
           markdownFiles=()
           for changed_file in ${{ steps.files.outputs.all }}
           do
-            if [[ ( ${changed_file} == *.html ) || ( ${changed_file} == *.json ) ]]
+            if [[ ( ${changed_file} == *.html ) ]]
             then
               echo "Do not commit any html or json files!"
-              return 1
+              exit 1
             fi
 
             if [[ ( ${changed_file} == *.md ) ]]
