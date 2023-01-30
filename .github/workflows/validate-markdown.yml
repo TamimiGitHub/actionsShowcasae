@@ -11,20 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout codelabs repo
-        uses: actions/checkout@v2
-      # - name: Setup Go
-      #   uses: actions/setup-go@v2
-      #   with:
-      #     go-version: '1.17'
-      # - name: Install claat
-      #   run: |
-      #     go install github.com/googlecodelabs/tools/claat@latest
+        uses: actions/checkout@v3
+        with:
+          path: codelabs
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.17'
+      - name: Install claat
+        run: |
+          go install github.com/googlecodelabs/tools/claat@latest
 
     # Get all files in commit
       - id: files
         uses: jitterbit/get-changed-files@v1
 
-      - name: Validate markdown file
+      - name: Validate markdown file using claat
         run: |
           markdownFiles=()
           for changed_file in ${{ steps.files.outputs.all }}
@@ -38,8 +40,7 @@ jobs:
             if [[ ( ${changed_file} == *.md ) ]]
             then
               markdownFiles+=("$changed_file")
-              echo $changed_file
-              # run export script
+              claat export -o ../../codelabs/ $changed_file
             fi
           done
 
@@ -52,51 +53,20 @@ jobs:
         if: env.CANCEL_WORKFLOW == 'true'
         uses: andymckay/cancel-action@0.2
 
-      # - name: Get changed files
-      #   id: changed-files
-      #   uses: tj-actions/changed-files@v35
-      #   with:
-      #     files: |
-      #       markdown/**
+      - name: Checkout codelabs Site repo
+        uses: actions/checkout@v3
+        with:
+          repository: SolaceDev/solace-dev-codelabs-site
+          path: codelabs-site
+          submodules: recursive
       
-      # - name: Validate .md files against claat
-      #   run: |
-      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-      #       echo "$file was changed"
-      #     done
-          
-      # - name: Validate .md files against claat
-      #   run: |
-      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-      #       echo "YOLO"
-      #       echo $file
-      #       cd $file
-      #       ls
-      #       ./export
-      #     done
-
-      # - name: Checkout codelabs Site repo
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: SolaceDev/solace-dev-codelabs-site
-      #     path: codelabs-site
-      #     submodules: recursive
-          
-      # - name: Install node 12.x
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: 12.16.2
+      - name: Install node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.16.2
         
-      # - name: build site with new files
-      #   run: | 
-      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-      #       echo $file
-      #       # cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
-      #       # cd codelabs-site/site/solace-dev-codelabs/$file
-      #       # ./export
-      #     done
-        
-        
-        
-        
-        
+      - name: build site with new files
+        run: | 
+          echo "YOLO"
+          cp -r codelabs/codelabs codelabs-site/site/solace-dev-codelabs/codelabs
+          ls codelabs-site/site/solace-dev-codelabs/codelabs
