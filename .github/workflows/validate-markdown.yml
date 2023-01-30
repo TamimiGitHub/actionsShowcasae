@@ -3,6 +3,9 @@ on:
   pull_request: 
     branches: [ master ]
 
+env:
+  CANCEL_WORKFLOW: false
+
 jobs:
   claat-export: 
     runs-on: ubuntu-latest
@@ -17,18 +20,49 @@ jobs:
       #   run: |
       #     go install github.com/googlecodelabs/tools/claat@latest
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          files: |
-            markdown/**
-      
-      - name: List all changed files
+    # Get all files in commit
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+
+      - name: Validate markdown file
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+          markdownFiles=()
+          for changed_file in ${{ steps.files.outputs.all }}
+          do
+            if [[ ( ${changed_file} == *.html ) || ( ${changed_file} == *.json ) ]]
+            then
+              echo "Do not commit any html or json files!"
+              return 1
+            fi
+
+            if [[ ( ${changed_file} == *.md ) ]]
+            then
+              echo $changed_file
+              # run export script
+            fi
           done
+
+          if [ ${#markdownFiles[@]} -eq 0 ]; then
+            echo "Cancel workflow. No markdown found!"
+            echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
+          fi
+
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: env.CANCEL_WORKFLOW == 'true'
+        uses: andymckay/cancel-action@0.2
+
+      # - name: Get changed files
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v35
+      #   with:
+      #     files: |
+      #       markdown/**
+      
+      # - name: Validate .md files against claat
+      #   run: |
+      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+      #       echo "$file was changed"
+      #     done
           
       # - name: Validate .md files against claat
       #   run: |
