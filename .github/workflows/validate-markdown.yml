@@ -3,25 +3,99 @@ on:
   pull_request: 
     branches: [ master ]
 
+env:
+  CANCEL_WORKFLOW: false
+
 jobs:
   claat-export: 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.17'
-      - name: Install claat
-        run: |
-          go install github.com/googlecodelabs/tools/claat@latest
+      - name: Checkout codelabs repo
+        uses: actions/checkout@v2
+      # - name: Setup Go
+      #   uses: actions/setup-go@v2
+      #   with:
+      #     go-version: '1.17'
+      # - name: Install claat
+      #   run: |
+      #     go install github.com/googlecodelabs/tools/claat@latest
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          dir_names: "true"
+    # Get all files in commit
+      - id: files
+        uses: jitterbit/get-changed-files@v1
 
-      - name: list changed files
+      - name: Validate markdown file
         run: |
-          ls ${{steps.changed-files.outputs.modified_files}}
+          markdownFiles=()
+          for changed_file in ${{ steps.files.outputs.all }}
+          do
+            if [[ ( ${changed_file} == *.html ) || ( ${changed_file} == *.json ) ]]
+            then
+              echo "Do not commit any html or json files!"
+              return 1
+            fi
+
+            if [[ ( ${changed_file} == *.md ) ]]
+            then
+              echo $changed_file
+              # run export script
+            fi
+          done
+
+          if [ ${#markdownFiles[@]} -eq 0 ]; then
+            echo "Cancel workflow. No markdown found!"
+            echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
+          fi
+
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: env.CANCEL_WORKFLOW == 'true'
+        uses: andymckay/cancel-action@0.2
+
+      # - name: Get changed files
+      #   id: changed-files
+      #   uses: tj-actions/changed-files@v35
+      #   with:
+      #     files: |
+      #       markdown/**
+      
+      # - name: Validate .md files against claat
+      #   run: |
+      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+      #       echo "$file was changed"
+      #     done
+          
+      # - name: Validate .md files against claat
+      #   run: |
+      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+      #       echo "YOLO"
+      #       echo $file
+      #       cd $file
+      #       ls
+      #       ./export
+      #     done
+
+      # - name: Checkout codelabs Site repo
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: SolaceDev/solace-dev-codelabs-site
+      #     path: codelabs-site
+      #     submodules: recursive
+          
+      # - name: Install node 12.x
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 12.16.2
+        
+      # - name: build site with new files
+      #   run: | 
+      #     for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+      #       echo $file
+      #       # cp -r codelabs/$file codelabs-site/site/solace-dev-codelabs
+      #       # cd codelabs-site/site/solace-dev-codelabs/$file
+      #       # ./export
+      #     done
+        
+        
+        
+        
+        
