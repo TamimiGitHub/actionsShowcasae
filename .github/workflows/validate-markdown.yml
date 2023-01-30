@@ -37,6 +37,7 @@ jobs:
 
             if [[ ( ${changed_file} == *.md ) ]]
             then
+              markdownFiles+=("$changed_file")
               echo $changed_file
               # run export script
             fi
