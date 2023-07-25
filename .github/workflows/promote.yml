@@ -42,14 +42,17 @@ jobs:
           run: |
             for changed_file in ${{ steps.files.outputs.all }}
             do
+              echo $changed_file
               if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
               then
                 APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
               fi
               if [[ ( ${changed_file} == *.json )]]
               then
-                echo "To implement JSON parsing"
+                APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  Shipping\ Service-0.1.1.json | cut -d'"' -f 4)
               fi
+              echo "YOLO"
+              echo $APPLICATION_VERSION_IDS
             done
             if [ ${#APPLICATION_VERSION_IDS[@]} -eq 0 ]; then
               echo "Cancel workflow. No applicaitn IDs found to promote!"
@@ -63,4 +66,13 @@ jobs:
         - name: Cancel Workflow if no asyncAPI file present in PR
           if: env.CANCEL_WORKFLOW == 'true'
           uses: andymckay/cancel-action@0.2
-  
+        
+        - name: Checkout terraform provisioning 
+          uses: actions/checkout@v2
+          with:
+            repository: TamimiGitHub/solace-terraform-provisioning
+          
+        - name: Update submodule
+          run: |
+            npm install
+            npm run promote -- -av 133tineuf8h -mes PROD-Kafka

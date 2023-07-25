@@ -35,8 +35,32 @@ env:
   TF_VAR_kafka_api_secret: ${{ secrets.TF_VAR_kafka_api_secret }}
   TF_VAR_kafka_rest_endpoint: ${{ secrets.TF_VAR_kafka_rest_endpoint }}
   TF_VAR_kafka_id: ${{ secrets.TF_VAR_kafka_id }}
+
 jobs:
+
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
+        
+      - name: Checkout terraform configuration repo
+        uses: actions/checkout@v2
+        with:
+          repository: TamimiGitHub/solace-terraform-provisioning
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Promote applicaiton
+        # Todo 
+        # Parse async api file in commit and extract application version id 
+        run: npm run promote -- -av 133tineuf8h -mes PROD-Kafka
+
   provision:
+      needs: promote 
       runs-on: ubuntu-latest
       steps:
         - name: Checkout Current Branch
@@ -70,9 +94,4 @@ jobs:
             echo "TF_VAR_kafka_rest_endpoint=$TF_VAR_kafka_rest_endpoint" >> env-config-confluent.list
             echo "TF_VAR_kafka_id=$TF_VAR_kafka_id" >> env-config-confluent.list
 
-            cat env-config-confluent.list
-
             SOLACE_MESSAGING_SERVICE="PROD-Kafka" npm run provision
-
-
-
