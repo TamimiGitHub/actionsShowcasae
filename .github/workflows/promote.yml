@@ -42,14 +42,14 @@ jobs:
           run: |
             applicationVersionIDs=()
             for changed_file in ${{ steps.files.outputs.all }}
-            if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
-              # applicationVersionIDs += (awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
-              APPLICATION_VERSION_IDS = awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2
-            fi
-            if [[ ( ${changed_file} == *.json )]]
-              echo "To implement JSON parsing"
-            fi
             do
+              if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
+                # applicationVersionIDs += (awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
+                APPLICATION_VERSION_IDS = awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2
+              fi
+              if [[ ( ${changed_file} == *.json )]]
+                echo "To implement JSON parsing"
+              fi
             done
             if [ ${#APPLICATION_VERSION_IDS[@]} -eq 0 ]; then
               echo "Cancel workflow. No applicaitn IDs found to promote!"
