@@ -16,12 +16,17 @@ on:
 
 env:
   CANCEL_WORKFLOW: false
-  APPLICATION_VERSION_ID: " "
-  TARGET_MES: " "
+  APPLICATION_VERSION_ID:
+  TARGET_MES:
 jobs:
   get-application-version-id:
       runs-on: ubuntu-latest
       steps:
+        - name: Setup node
+          uses: actions/setup-node@v3
+          with: 
+            node-version: '16'
+            
         - name: Checkout Current Branch
           uses: actions/checkout@master
           with:
@@ -30,6 +35,8 @@ jobs:
       # Get all files in commit
         - id: files
           uses: jitterbit/get-changed-files@v1
+          with: 
+            format: ''
 
         - name: Check if an AsycnAPI file is in commit
           run: |
