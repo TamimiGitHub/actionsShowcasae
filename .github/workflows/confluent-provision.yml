@@ -54,21 +54,21 @@ jobs:
 
         - name: run provision commands
           run: |
-            echo \
-            "TF_MODULE=confluent-topics\n \
-            TF_BACKEND_S3_BUCKET=tf-test-confluent-topics\n \
-            # Cluster terraform-dev\n \
-            TF_BACKEND_S3_BUCKET_KEY=$TF_BACKEND_S3_BUCKET_KEY\n \
-            TF_BACKEND_DYNAMODB_LOCK_TABLE=tf-test-confluent-topics-locks\n \
-            AWS_REGION=us-east-2\n \
-            AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID\n \
-            AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY\n \
-            TF_VAR_cloud_api_key=$TF_VAR_cloud_api_key\n \
-            TF_VAR_cloud_api_secret=$TF_VAR_cloud_api_secret\n \
-            TF_VAR_kafka_api_key=$TF_VAR_kafka_api_key\n \
-            TF_VAR_kafka_api_secret=$TF_VAR_kafka_api_secret\n \
-            TF_VAR_kafka_rest_endpoint=$TF_VAR_kafka_rest_endpoint\n \
-            TF_VAR_kafka_id=$TF_VAR_kafka_id" > env-config-confluent.list
+            touch env-config-confluent.list
+            echo "TF_MODULE=confluent-topics" >> env-config-confluent.list
+            echo "TF_BACKEND_S3_BUCKET=tf-test-confluent-topics" >> env-config-confluent.list
+            echo "# Cluster terraform-dev" >> env-config-confluent.list
+            echo "TF_BACKEND_S3_BUCKET_KEY=$TF_BACKEND_S3_BUCKET_KEY" >> env-config-confluent.list
+            echo "TF_BACKEND_DYNAMODB_LOCK_TABLE=tf-test-confluent-topics-locks" >> env-config-confluent.list
+            echo "AWS_REGION=us-east-2" >> env-config-confluent.list
+            echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> env-config-confluent.list
+            echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> env-config-confluent.list
+            echo "TF_VAR_cloud_api_key=$TF_VAR_cloud_api_key" >> env-config-confluent.list
+            echo "TF_VAR_cloud_api_secret=$TF_VAR_cloud_api_secret" >> env-config-confluent.list
+            echo "TF_VAR_kafka_api_key=$TF_VAR_kafka_api_key" >> env-config-confluent.list
+            echo "TF_VAR_kafka_api_secret=$TF_VAR_kafka_api_secret" >> env-config-confluent.list
+            echo "TF_VAR_kafka_rest_endpoint=$TF_VAR_kafka_rest_endpoint" >> env-config-confluent.list
+            echo "TF_VAR_kafka_id=$TF_VAR_kafka_id" >> env-config-confluent.list
 
             cat env-config-confluent.list
 
