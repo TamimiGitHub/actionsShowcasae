@@ -16,7 +16,7 @@ on:
 
 env:
   CANCEL_WORKFLOW: false
-  APPLICATION_VERSION_ID:
+  APPLICATION_VERSION_IDS:
   TARGET_MES:
 jobs:
   get-application-version-id:
@@ -40,24 +40,24 @@ jobs:
 
         - name: Check if an AsycnAPI file is in commit
           run: |
-            asyncapiFiles=()
+            applicationVersionIDs=()
             for changed_file in ${{ steps.files.outputs.all }}
+            if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
+              # applicationVersionIDs += (awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
+              APPLICATION_VERSION_IDS = awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2
+            fi
+            if [[ ( ${changed_file} == *.json )]]
+              echo "To implement JSON parsing"
+            fi
             do
-              if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
-              then
-                asyncapi validate ${changed_file} &> check.txt
-                # Check if the file is an asyncapi spec
-                if ! grep -q "field is missing." check.txt; then
-                  asyncapiFiles+=("$changed_file")
-                  echo "This is an asyncapi file"
-                fi
-              fi
             done
-            if [ ${#asyncapiFiles[@]} -eq 0 ]; then
-              echo "Cancel workflow. No file found!"
+            if [ ${#APPLICATION_VERSION_IDS[@]} -eq 0 ]; then
+              echo "Cancel workflow. No applicaitn IDs found to promote!"
+              echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
               echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
             else
-              echo $asyncapiFiles
+              echo $APPLICATION_VERSION_IDS
+              echo "APPLICATION_VERSION_IDS=true$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
             fi
 
         - name: Cancel Workflow if no asyncAPI file present in PR
