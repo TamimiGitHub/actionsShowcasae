@@ -1,0 +1,59 @@
+# This workflow will be triggered on every merge to the prod, int, and dev branches 
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Validation only runs if an AsyncAPI spec file is present in the commit
+
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+
+name: Promote application in target modeled event mesh
+on:
+  push: 
+    branches: [ prod, dev, int ]
+
+env:
+  CANCEL_WORKFLOW: false
+  APPLICATION_VERSION_ID: " "
+  TARGET_MES: " "
+jobs:
+  get-application-version-id:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Current Branch
+          uses: actions/checkout@master
+          with:
+            ref: ${{ github.ref }}
+            
+      # Get all files in commit
+        - id: files
+          uses: jitterbit/get-changed-files@v1
+
+        - name: Check if an AsycnAPI file is in commit
+          run: |
+            asyncapiFiles=()
+            for changed_file in ${{ steps.files.outputs.all }}
+            do
+              if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml ) || ( ${changed_file} == *.json ) ]]
+              then
+                asyncapi validate ${changed_file} &> check.txt
+                # Check if the file is an asyncapi spec
+                if ! grep -q "field is missing." check.txt; then
+                  asyncapiFiles+=("$changed_file")
+                  echo "This is an asyncapi file"
+                fi
+              fi
+            done
+            if [ ${#asyncapiFiles[@]} -eq 0 ]; then
+              echo "Cancel workflow. No file found!"
+              echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
+            else
+              echo $asyncapiFiles
+            fi
+
+        - name: Cancel Workflow if no asyncAPI file present in PR
+          if: env.CANCEL_WORKFLOW == 'true'
+          uses: andymckay/cancel-action@0.2
+  
