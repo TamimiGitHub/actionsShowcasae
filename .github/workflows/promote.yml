@@ -38,14 +38,12 @@ jobs:
           with: 
             format: 'json'
 
-        - name: Check if an AsycnAPI file is in commit
+        - name: Get Application version ID from asyncapi spec file
           run: |
-            # applicationVersionIDs=()
             for changed_file in ${{ steps.files.outputs.all }}
             do
               if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
               then
-                # applicationVersionIDs+=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
                 APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
               fi
               if [[ ( ${changed_file} == *.json )]]
@@ -59,7 +57,7 @@ jobs:
               echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
             else
               echo $APPLICATION_VERSION_IDS
-              echo "APPLICATION_VERSION_IDS=true$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
+              echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
             fi
 
         - name: Cancel Workflow if no asyncAPI file present in PR
