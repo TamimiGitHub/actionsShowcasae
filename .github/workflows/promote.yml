@@ -40,13 +40,13 @@ jobs:
 
         - name: Check if an AsycnAPI file is in commit
           run: |
-            applicationVersionIDs=()
+            # applicationVersionIDs=()
             for changed_file in ${{ steps.files.outputs.all }}
             do
               if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
               then
-                # applicationVersionIDs += (awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
-                APPLICATION_VERSION_IDS = awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2
+                # applicationVersionIDs+=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
+                APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
               fi
               if [[ ( ${changed_file} == *.json )]]
               then
