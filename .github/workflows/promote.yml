@@ -42,7 +42,8 @@ jobs:
           run: |
             for changed_file in ${{ steps.files.outputs.all }}
             do
-              echo $changed_file
+              echo "changed file: "
+              echo ${changed_file}
               if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
               then
                 APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
@@ -59,6 +60,7 @@ jobs:
               echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
               echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
             else
+              echo "APPLICATION_VERSION_IDS not empty"
               echo $APPLICATION_VERSION_IDS
               echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
             fi
@@ -71,8 +73,3 @@ jobs:
           uses: actions/checkout@v2
           with:
             repository: TamimiGitHub/solace-terraform-provisioning
-          
-        - name: Update submodule
-          run: |
-            npm install
-            npm run promote -- -av 133tineuf8h -mes PROD-Kafka
