@@ -72,7 +72,6 @@ jobs:
 
             cat env-config-confluent.list
 
-            ls -a 
             SOLACE_MESSAGING_SERVICE="PROD-Kafka" npm run provision
 
 
