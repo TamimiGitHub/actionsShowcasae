@@ -70,7 +70,14 @@ jobs:
           if: env.CANCEL_WORKFLOW == 'true'
           uses: andymckay/cancel-action@0.2
         
-        - name: Checkout terraform provisioning 
+        - name: Checkout terraform configuration repo
           uses: actions/checkout@v2
           with:
             repository: TamimiGitHub/solace-terraform-provisioning
+        
+        - name: Install dependencies
+          run: npm install
+        
+        - name: Promote applicaiton
+          run: | 
+            echo "Promote ${{ env.APPLICATION_VERSION_IDS }}"
