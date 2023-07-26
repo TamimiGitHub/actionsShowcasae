@@ -31,11 +31,11 @@ jobs:
             ref: ${{ github.ref }}
             fetch-depth: 0
             
-      # Get all files in commit
-        - id: files
-          uses: jitterbit/get-changed-files@v1
-          with:
-            format: csv
+      # # Get all files in commit
+      #   - id: files
+      #     uses: jitterbit/get-changed-files@v1
+      #     with:
+      #       format: csv
 
         - id: changed-files
           uses: tj-actions/changed-files@v11.2
@@ -74,7 +74,21 @@ jobs:
           run: |
             IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
             for file in "${MODIFIED_FILES_ARRAY[@]}"; do
-              echo $file
+              do
+                echo "changed file: ${changed_file}"
+                if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
+                then
+                  APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
+                  echo "in yml file"
+                  echo ${APPLICATION_VERSION_IDS}
+                fi
+                if [[ ( ${changed_file} == *.json )]]
+                then
+                  APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  Shipping\ Service-0.1.1.json | cut -d'"' -f 4)
+                  echo "in json file"
+                  echo ${APPLICATION_VERSION_IDS}
+                fi
+              done
             done
             unset IFS
           shell:
