@@ -72,7 +72,7 @@ jobs:
 
         - name: List all modified files
           run: |
-            IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "asyncapi/Shipping Service-0.1.1.json,asyncapi/Shipping Service-0.1.1.yaml"
+            IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
             for file in "${MODIFIED_FILES_ARRAY[@]}"
                 do
                   echo "changed file: $file"
