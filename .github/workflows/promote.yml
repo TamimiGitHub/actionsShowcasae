@@ -29,6 +29,7 @@ jobs:
           uses: actions/checkout@master
           with:
             ref: ${{ github.ref }}
+            fetch-depth: 0
             
       # Get all files in commit
         - id: files
