@@ -72,26 +72,22 @@ jobs:
 
         - name: List all modified files
           run: |
-            IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
-            unset IFS
+            IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "asyncapi/Shipping Service-0.1.1.json,asyncapi/Shipping Service-0.1.1.yaml"
             for file in "${MODIFIED_FILES_ARRAY[@]}"
-              do
-                file=$( echo "$file" | sed 's/ /\\ /g' )
-                echo "changed file: $file"
-                # cat $file
-                if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml )]]
-                then
-                  APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  "${file}" | cut -d'"' -f 2)
-                  echo "in yml file"
-                  echo $APPLICATION_VERSION_IDS
-                fi
-                if [[ ( ${file} == *.json )]]
-                then
-                  echo "in json file"
-                  APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  "${file}" | cut -d'"' -f 4)
-                  echo ${APPLICATION_VERSION_IDS}
-                fi
-              done
+                do
+                  echo "changed file: $file"
+                  if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml )]]
+                  then
+                    APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  "${file}" | cut -d'"' -f 2)
+                    echo $APPLICATION_VERSION_IDS
+                  fi
+                  if [[ ( ${file} == *.json )]]
+                  then
+                    APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  "${file}" | cut -d'"' -f 4)
+                    echo ${APPLICATION_VERSION_IDS}
+                  fi
+                done
+              unset IFS
           shell:
             bash
 
