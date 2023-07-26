@@ -75,21 +75,20 @@ jobs:
             IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
             for file in "${MODIFIED_FILES_ARRAY[@]}"
               do
-                echo "changed file: ${changed_file}"
-                if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
+                echo "changed file: $file"
+                if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml )]]
                 then
-                  APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
+                  APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${file} | cut -d'"' -f 2)
                   echo "in yml file"
                   echo ${APPLICATION_VERSION_IDS}
                 fi
-                if [[ ( ${changed_file} == *.json )]]
+                if [[ ( ${file} == *.json )]]
                 then
                   APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  Shipping\ Service-0.1.1.json | cut -d'"' -f 4)
                   echo "in json file"
                   echo ${APPLICATION_VERSION_IDS}
                 fi
               done
-            done
             unset IFS
           shell:
             bash
