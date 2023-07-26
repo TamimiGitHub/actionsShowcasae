@@ -60,8 +60,7 @@ jobs:
               echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
               echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
             else
-              echo "APPLICATION_VERSION_IDS not empty"
-              echo ${APPLICATION_VERSION_IDS}
+              echo "APPLICATION_VERSION_IDS not empty: ${APPLICATION_VERSION_IDS}"
               echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
             fi
 
