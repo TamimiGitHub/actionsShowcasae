@@ -73,7 +73,7 @@ jobs:
         - name: List all modified files
           run: |
             IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
-            for file in "${MODIFIED_FILES_ARRAY[@]}"; do
+            for file in "${MODIFIED_FILES_ARRAY[@]}"
               do
                 echo "changed file: ${changed_file}"
                 if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
