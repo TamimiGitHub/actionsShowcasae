@@ -3,7 +3,7 @@ components:
   schemas: {}
   messages:
     Catalogue:
-      x-ep-event-id: "x2scssndsp"
+      x-ep-event-id: "x2scsssndsp"
       x-ep-event-version-displayname: ""
       x-ep-custom-attr-runtime-config: "{\n\t\"kafkaTopic\": {\n\t\t\"cleanup.policy\"\
         : \"delete\",\n\t\t\"compression.type\": \"producer\",\n\t\t\"delete.retention.ms\"\
