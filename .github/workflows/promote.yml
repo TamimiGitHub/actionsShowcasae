@@ -77,7 +77,7 @@ jobs:
               do
                 # file=$( echo "$file" | sed 's/ /\\ /g' )
                 echo "changed file: $file"
-                cat "{$file}"
+                cat "$file"
                 if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml )]]
                 then
                   APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${file} | cut -d'"' -f 2)
