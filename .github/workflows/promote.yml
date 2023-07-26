@@ -61,7 +61,7 @@ jobs:
               echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
             else
               echo "APPLICATION_VERSION_IDS not empty"
-              echo $APPLICATION_VERSION_IDS
+              echo ${APPLICATION_VERSION_IDS}
               echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
             fi
 
