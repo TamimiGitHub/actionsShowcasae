@@ -35,8 +35,6 @@ jobs:
       # Get all files in commit
         - id: files
           uses: jitterbit/get-changed-files@v1
-          with: 
-            format: 'json'
 
         - name: Get Application version ID from asyncapi spec file
           run: |
