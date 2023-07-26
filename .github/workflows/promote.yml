@@ -12,7 +12,7 @@
 name: Promote application in target modeled event mesh
 on:
   push: 
-    branches: [ prod, dev, int ]
+    branches: [ prod ]
 
 env:
   CANCEL_WORKFLOW: false
@@ -79,5 +79,4 @@ jobs:
           run: npm install
         
         - name: Promote applicaiton
-          run: | 
-            echo "Promote ${{ env.APPLICATION_VERSION_IDS }}"
+          run: npm run promote -- -av ${{ env.APPLICATION_VERSION_IDS }} -mes PROD-Kafka
