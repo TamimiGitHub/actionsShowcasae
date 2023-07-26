@@ -32,44 +32,11 @@ jobs:
             fetch-depth: 0
             
       # # Get all files in commit
-      #   - id: files
-      #     uses: jitterbit/get-changed-files@v1
-      #     with:
-      #       format: csv
-
         - id: changed-files
           uses: tj-actions/changed-files@v11.2
           with:
               separator: ","
       
-        # - name: Get Application version ID from asyncapi spec file
-        #   run: |
-        #     for changed_file in ${{ steps.files.outputs.all }}
-        #     do
-        #       echo "changed file: "
-        #       echo ${changed_file}
-        #       if [[ ( ${changed_file} == *.yaml ) || ( ${changed_file} == *.yml )]]
-        #       then
-        #         APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${changed_file} | cut -d'"' -f 2)
-        #         echo "in yml file"
-        #         echo ${APPLICATION_VERSION_IDS}
-        #       fi
-        #       if [[ ( ${changed_file} == *.json )]]
-        #       then
-        #         APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  Shipping\ Service-0.1.1.json | cut -d'"' -f 4)
-        #         echo "in json file"
-        #         echo ${APPLICATION_VERSION_IDS}
-        #       fi
-        #     done
-        #     if [ ${#APPLICATION_VERSION_IDS[@]} -eq 0 ]; then
-        #       echo "Cancel workflow. No applicaitn IDs found to promote!"
-        #       echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
-        #       echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
-        #     else
-        #       echo "APPLICATION_VERSION_IDS not empty"
-        #       echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
-        #     fi
-
         - name: List all modified files
           run: |
             IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
@@ -88,7 +55,7 @@ jobs:
                   fi
                 done
               unset IFS
-              if [ ${#APPLICATION_VERSION_IDS[@]} -eq 0 ]; then
+              if [ -z $APPLICATION_VERSION_IDS ]; then
                 echo "Cancel workflow. No applicaitn IDs found to promote!"
                 echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
                 echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
