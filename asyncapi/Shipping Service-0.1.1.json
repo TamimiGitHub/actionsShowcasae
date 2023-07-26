@@ -3,7 +3,7 @@
     "schemas": {},
     "messages": {
       "Catalogue": {
-        "x-ep-event-id": "x2ccslndssfpj",
+        "x-ep-event-id": "x2ccslndsfpj",
         "x-ep-event-version-displayname": "",
         "x-ep-custom-attr-runtime-config": {
           "kafkaTopic": {
