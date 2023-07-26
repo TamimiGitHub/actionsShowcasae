@@ -80,12 +80,12 @@ jobs:
                 then
                   APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  ${file} | cut -d'"' -f 2)
                   echo "in yml file"
-                  echo ${APPLICATION_VERSION_IDS}
+                  echo $APPLICATION_VERSION_IDS
                 fi
                 if [[ ( ${file} == *.json )]]
                 then
-                  APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  Shipping\ Service-0.1.1.json | cut -d'"' -f 4)
                   echo "in json file"
+                  APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  ${file} | cut -d'"' -f 4)
                   echo ${APPLICATION_VERSION_IDS}
                 fi
               done
