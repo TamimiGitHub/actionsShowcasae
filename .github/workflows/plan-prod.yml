@@ -6,6 +6,10 @@ on:
 env:
   SOLACE_MESSAGING_SERVICE: PROD-Kafka
   SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+  TF_VAR_confluent_cloud_api_key: ${{ secrets.TF_VAR_confluent_cloud_api_key }}
+  TF_VAR_confluent_cloud_api_secret: ${{ secrets.TF_VAR_confluent_cloud_api_secret }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
   terraform-init:
@@ -27,7 +31,7 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: cd terraform-config; terraform init -reconfigure; terraform plan
+        run: npm run config; npm run generate; cd terraform-config; terraform init -reconfigure; terraform plan
       
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
@@ -36,6 +40,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style')
+            })
+
+            // 2. Prepare format of the comment
             const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
       
             <details><summary>Show Plan</summary>
