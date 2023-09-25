@@ -5,6 +5,7 @@ on:
 
 env:
   SOLACE_MESSAGING_SERVICE: PROD-Kafka
+  SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
 
 jobs:
   terraform-init:
