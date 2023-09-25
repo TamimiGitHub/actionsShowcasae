@@ -1,0 +1,82 @@
+# This workflow will be triggered on every merge to the prod, int, and dev branches 
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Validation only runs if an AsyncAPI spec file is present in the commit
+
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+
+name: Promote application in target modeled event mesh
+on:
+  push: 
+    branches: [ prod ]
+
+env:
+  CANCEL_WORKFLOW: false
+jobs:
+  get-application-version-id:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Setup node
+          uses: actions/setup-node@v3
+          with: 
+            node-version: '16'
+            
+        - name: Checkout Current Branch
+          uses: actions/checkout@master
+          with:
+            ref: ${{ github.ref }}
+            fetch-depth: 0
+            
+      # Get all files in commit
+        - id: changed-files
+          uses: tj-actions/changed-files@v11.2
+          with:
+            separator: ","
+      
+        - name: List all modified files
+          run: |
+            IFS=$',' read -a MODIFIED_FILES_ARRAY <<< "${{ steps.changed-files.outputs.modified_files }}"
+            for file in "${MODIFIED_FILES_ARRAY[@]}"
+                do
+                  echo "changed file: $file"
+                  if [[ ( ${file} == *.yaml ) || ( ${file} == *.yml )]]
+                  then
+                    APPLICATION_VERSION_IDS=$(awk '/x-ep-application-version-id: \"/,/\"/'  "${file}" | cut -d'"' -f 2)
+                    echo $APPLICATION_VERSION_IDS
+                  fi
+                  if [[ ( ${file} == *.json )]]
+                  then
+                    APPLICATION_VERSION_IDS=$(awk '/\"x-ep-application-version-id\": \"/,/\"/'  "${file}" | cut -d'"' -f 4)
+                    echo ${APPLICATION_VERSION_IDS}
+                  fi
+                done
+              unset IFS
+              if [ -z $APPLICATION_VERSION_IDS ]; then
+                echo "Cancel workflow. No applicaitn IDs found to promote!"
+                echo "Make sure the x-ep-application-version-id extension is defined in the asyncapi spec file in the info block"
+                echo "CANCEL_WORKFLOW=true" >> $GITHUB_ENV
+              else
+                echo "APPLICATION_VERSION_IDS not empty"
+                echo "APPLICATION_VERSION_IDS=$APPLICATION_VERSION_IDS" >> $GITHUB_ENV
+              fi
+          shell:
+            bash
+
+        - name: Cancel Workflow if no asyncAPI file present in PR
+          if: env.CANCEL_WORKFLOW == 'true'
+          uses: andymckay/cancel-action@0.2
+        
+        - name: Checkout terraform configuration repo
+          uses: actions/checkout@v2
+          with:
+            repository: TamimiGitHub/solace-terraform-provisioning
+        
+        - name: Install dependencies
+          run: npm install
+        
+        - name: Promote applicaiton
+          run: npm run promote -- -av ${{ env.APPLICATION_VERSION_IDS }} -mes PROD-Kafka
