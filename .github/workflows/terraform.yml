@@ -3,14 +3,26 @@ on:
   push: 
     branches: [ master ]
 
+env:
+  SOLACE_MESSAGING_SERVICE: PROD-Kafka
+
 jobs:
   terraform-init:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.7
-      - name: Terraform Init
-        id: init 
-        run: terraform init
+   
+      - name: Checkout terraform configuration repo
+        uses: actions/checkout@v2
+        with:
+          repository: TamimiGitHub/solace-terraform-provisioning
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Provision
+        run: SOLACE_MESSAGING_SERVICE=$SOLACE_MESSAGING_SERVICE npm run provision
