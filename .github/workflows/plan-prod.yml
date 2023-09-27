@@ -31,12 +31,12 @@ jobs:
 
       - name: Terraform plan
         id: plan
-        run: SOLACE_MESSAGING_SERVICE=$SOLACE_MESSAGING_SERVICE npm run plan
+        run: SOLACE_MESSAGING_SERVICE=$SOLACE_MESSAGING_SERVICE npm run plan -- -no-color
       
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
         env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          PLAN: "Terraform Plan\n${{ steps.plan.outputs.stdout }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
