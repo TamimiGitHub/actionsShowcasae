@@ -20,9 +20,5 @@ jobs:
           repository: TamimiGitHub/solace-terraform-provisioning
           path: terraform
         
-      - name: list files
-        run: |
-          pwd
-          ls
-          echo "==========="
-          ls ../
+      - name: Install dependencies
+        run: cd terraform; npm install
