@@ -22,3 +22,8 @@ jobs:
         
       - name: Install dependencies
         run: cd terraform; npm install
+      
+      - name: Promote application 
+        run: |
+          cd terraform
+          npm run promote -- -f ../asyncapi/yolo.json -mes PROD-Kafka
