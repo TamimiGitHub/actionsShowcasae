@@ -3,6 +3,9 @@ on:
   push: 
     branches: [ master ]
 
+env:
+  SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+
 jobs:
   Build_Preview:
     runs-on: ubuntu-latest
@@ -27,3 +30,8 @@ jobs:
         run: |
           cd terraform
           npm run promote -- -f ../asyncapi/yolo.json -mes PROD-Kafka
+        
+      - name: Demote application 
+        run: |
+          cd terraform
+          npm run promote -- -f ../asyncapi/yolo.json -mes PROD-Kafka -d
