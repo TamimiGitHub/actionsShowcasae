@@ -15,10 +15,10 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Checkout terraform configuration repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: TamimiGitHub/solace-terraform-provisioning
           path: terraform
