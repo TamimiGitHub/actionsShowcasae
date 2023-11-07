@@ -17,7 +17,7 @@ jobs:
       
       - uses: SolaceDev/solace-ep-provisioning-github-action@v1.4
         with:
-          Broker_Type: solace
+          Broker_Type: confluent
           SOLACE_MESSAGING_SERVICE: "PROD-Kafka"
           SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
           TF_VAR_confluent_cloud_api_key: ${{ secrets.TF_VAR_CONFLUENT_CLOUD_API_KEY }}
