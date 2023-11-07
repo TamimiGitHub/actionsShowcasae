@@ -15,7 +15,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       
-      - uses: SolaceDev/solace-ep-provisioning-github-action@v1.4
+      - uses: SolaceDev/solace-ep-provisioning-github-action@v1.5
         with:
           Broker_Type: confluent
           SOLACE_MESSAGING_SERVICE: "PROD-Kafka"
