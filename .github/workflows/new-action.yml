@@ -15,6 +15,6 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       
-      - uses: SolaceDev/solace-ep-provisioning-github-action@v1.1
+      - uses: SolaceDev/solace-ep-provisioning-github-action@v1.2
         with:
           who-to-greet: 'Mona the Octocat'
