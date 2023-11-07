@@ -17,4 +17,10 @@ jobs:
       
       - uses: SolaceDev/solace-ep-provisioning-github-action@v1.3
         with:
-          who-to-greet: 'Mona the Octocat'
+          Broker_Type: solace
+          SOLACE_MESSAGING_SERVICE: "PROD-Kafka"
+          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          TF_VAR_confluent_cloud_api_key: ${{ secrets.TF_VAR_CONFLUENT_CLOUD_API_KEY }}
+          TF_VAR_confluent_cloud_api_secret: ${{ secrets.TF_VAR_CONFLUENT_CLOUD_API_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
