@@ -34,7 +34,10 @@ jobs:
         run: echo $PATH
 
       - name: Export file
-        run: cd main/markdown/dt-otel; claat export dt-otel.md
+        run: google-tools/claat/claat export main/markdown/dt-otel/dt-otel.md
+      
+      - name: list files in codelabs
+        run: ls main/codelabs
 
       - name: Dump GitHub context
         env:
