@@ -39,7 +39,7 @@ jobs:
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo $file
-            google-tools/claat/claat export -o main/codelabs/ $file
+            google-tools/claat/claat export -o main/codelabs/ main/$file
           done
 
       - name: list files in codelabs
