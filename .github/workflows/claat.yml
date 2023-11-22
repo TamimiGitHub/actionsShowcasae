@@ -1,6 +1,7 @@
 name: Claat Export
 on:
   push:
+    branches: [ master ]
     paths:
       - markdown/**
 
