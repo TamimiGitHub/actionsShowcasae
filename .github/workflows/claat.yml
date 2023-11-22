@@ -27,20 +27,19 @@ jobs:
       - name: Build claat
         run: cd google-tools/claat; go build .
       
-      - name: Update PATH
-        run: cd google-tools/claat; export PATH=$PATH:$pwd
-    
       - name: Get all changed markdown files
         id: changed-markdown-files
         uses: tj-actions/changed-files@v40
         with:
-          files: |
-             **.md
+          files: | 
+            **.md
+          path: main
         
       - name: Export markdown files
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            google-tools/claat/claat export ../../codelabs/ $file
+            echo $file
+            google-tools/claat/claat export -o main/codelabs/ $file
           done
 
       - name: list files in codelabs
