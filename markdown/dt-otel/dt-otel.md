@@ -1,4 +1,4 @@
-author: Mikhail Gevantmakhers
+author: Mikhail Gevantmakherss
 summary: This Codelab will walk you through how to get started using Solace Distributed Tracing with Context Propagation
 id: dt-otel
 tags: 
