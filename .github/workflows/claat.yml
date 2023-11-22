@@ -16,18 +16,19 @@ jobs:
       - name: Checkout Current Branch
         uses: actions/checkout@master
         with:
-          ref: ${{ github.ref }}
+          path: main
 
-      - name: Checkout claat site
+      - name: Checkout claat repo
         uses: actions/checkout@v2
         with:
           repository: SolaceDev/google-tools
+          path: google-tools
       
       - name: Build claat
-        run: go build .
+        run: cd google-tools; go build .
       
       - name: Update PATH
-        run: export PATH=$PATH:$pwd
+        run: cd google-tools; export PATH=$PATH:$pwd
       
       - name: Echo Path
         run: echp $PATH
