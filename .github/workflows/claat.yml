@@ -12,12 +12,26 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.20.5'
-        
+      
       - name: Checkout Current Branch
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}
-          
+
+      - name: Checkout claat site
+        uses: actions/checkout@v2
+        with:
+          repository: SolaceDev/google-tools
+      
+      - name: Build claat
+        run: go build .
+      
+      - name: Update PATH
+        run: export PATH=$PATH:$pwd
+      
+      - name: Echo Path
+        run: echp $PATH
+
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
