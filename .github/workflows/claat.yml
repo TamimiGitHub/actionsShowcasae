@@ -33,11 +33,8 @@ jobs:
       - name: Echo Path
         run: echo $PATH
 
-      - name: list files
-        run: ls -a
-
       - name: Export file
-        run: cd main/markdown/dt-otl; claat export dt-otel.md
+        run: cd main/markdown/dt-otel; claat export dt-otel.md
 
       - name: Dump GitHub context
         env:
