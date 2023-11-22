@@ -25,13 +25,16 @@ jobs:
           path: google-tools
       
       - name: Build claat
-        run: cd google-tools; go build .
+        run: cd google-tools/claat; go build .
       
       - name: Update PATH
-        run: cd google-tools; export PATH=$PATH:$pwd
+        run: cd google-tools/claat; export PATH=$PATH:$pwd
       
       - name: Echo Path
         run: echp $PATH
+      
+      - name: Export file
+        run: cd main/markdown/dt-otl; claat export dt-otel.md
 
       - name: Dump GitHub context
         env:
