@@ -1,0 +1,69 @@
+name: Claat Export
+on:
+  pull_request_target:
+    branches: [ master ]
+    paths:
+      - markdown/**
+
+jobs:
+  Build_Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20.5'
+        
+      - name: Install node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.16.2
+      
+      - name: Checkout Current Branch
+        uses: actions/checkout@master
+        with:
+          path: main
+
+      - name: Checkout claat repo
+        uses: actions/checkout@v2
+        with:
+          repository: SolaceDev/google-tools
+          path: google-tools
+      
+      - name: Checkout site repo
+        uses: actions/checkout@v2
+        with:
+          repository: SolaceDev/solace-dev-codelabs-site
+          submodules: recursive
+          path: codelabs-site
+      
+      - name: Build claat
+        run: cd google-tools/claat; go build .
+      
+      - name: Get all changed markdown files
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: | 
+            **.md
+          path: main
+        
+      - name: Export markdown files into site dir
+        run: |
+          for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
+            echo $file
+            google-tools/claat/claat export -o codelabs-site/site/solace-dev-codelabs/codelabs main/$file
+          done
+
+      - name: Build site
+        run: cd codelabs-site/site && npm i && npm run dist
+      
+      - name: Netlify Deploy
+        uses: nwtgck/actions-netlify@v1.1.7
+        with:
+          publish-dir: 'codelabs-site/site/dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
