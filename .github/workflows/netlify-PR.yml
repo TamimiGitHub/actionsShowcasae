@@ -1,4 +1,4 @@
-name: Claat Export
+name: Build Netlify Preview
 on:
   pull_request_target:
     branches: [ master ]
@@ -52,12 +52,12 @@ jobs:
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo $file
+            folder="$(basename $file .md)"
             google-tools/claat/claat export -o codelabs-site/site/solace-dev-codelabs/codelabs main/$file
+            vi codelabs-site/site/solace-dev-codelabs/codelabs/$folder/index.html
           done
+          cd codelabs-site/site && npm i && npm run dist
 
-      - name: Build site
-        run: cd codelabs-site/site && npm i && npm run dist
-      
       - name: Netlify Deploy
         uses: nwtgck/actions-netlify@v1.1.7
         with:
