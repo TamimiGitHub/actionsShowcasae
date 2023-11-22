@@ -31,7 +31,7 @@ jobs:
         run: cd google-tools/claat; export PATH=$PATH:$pwd
       
       - name: Echo Path
-        run: echp $PATH
+        run: echo $PATH
       
       - name: Export file
         run: cd main/markdown/dt-otl; claat export dt-otel.md
