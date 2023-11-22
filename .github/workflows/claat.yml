@@ -29,17 +29,19 @@ jobs:
       
       - name: Update PATH
         run: cd google-tools/claat; export PATH=$PATH:$pwd
-      
-      - name: Echo Path
-        run: echo $PATH
+    
+      - name: Get all changed markdown files
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: |
+             **.md
+        
+      - name: Export markdown files
+        run: |
+          for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
+            google-tools/claat/claat export ../../codelabs/ $file
+          done
 
-      - name: Export file
-        run: google-tools/claat/claat export main/markdown/dt-otel/dt-otel.md
-      
       - name: list files in codelabs
         run: ls main/codelabs
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
