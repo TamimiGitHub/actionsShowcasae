@@ -7,7 +7,7 @@ environments: Web
 status: Published
 feedback link: https://github.com/SolaceDev/solace-dev-codelabs/blob/master/markdown/dt-otel
 
-# YOLO Cuatro
+# Getting Started with Solace Distributed Tracing and Context Propagation
 
 ## What you'll learn: Overview
 Duration: 0:03:00
