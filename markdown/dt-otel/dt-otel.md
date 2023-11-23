@@ -7,7 +7,7 @@ environments: Web
 status: Published
 feedback link: https://github.com/SolaceDev/solace-dev-codelabs/blob/master/markdown/dt-otel
 
-# YOLO Tres
+# YOLO Cuatro
 
 ## What you'll learn: Overview
 Duration: 0:03:00
