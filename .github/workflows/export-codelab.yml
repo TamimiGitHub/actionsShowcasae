@@ -8,7 +8,7 @@ on:
 env:
   CHANGED_CODELABS: ''
 jobs:
-  Claat-Export:
+  Export-Codelab:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Go
