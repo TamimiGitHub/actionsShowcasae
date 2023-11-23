@@ -53,10 +53,8 @@ jobs:
       - name: Export markdown files into site dir
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            cat main/$file
             folder="$(basename $file .md)"
             google-tools/claat/claat export -o codelabs-site/site/solace-dev-codelabs/codelabs main/$file
-            # cat codelabs-site/site/solace-dev-codelabs/codelabs/$folder/index.html
           done
           cd codelabs-site/site && npm i && npm run dist
 
