@@ -1,4 +1,4 @@
-name: Claat Export
+name: Export Codelabs
 on:
   push:
     branches: [ master ]
@@ -47,11 +47,14 @@ jobs:
           done
 
           cd main
+          git status
+          git remote -v
+          ls codelabs
           git config user.name SollyBot
           git config user.email community@solace.com
           git commit -am "Adding ${{env.CHANGED_CODELABS}} html files"
           git push
 
 
-      - name: Update site rep
-        run: echo "Webhook trigger action"
+      - name: Push updates to codelabs repo
+        run: echo "Push updates to codelabs repo"
