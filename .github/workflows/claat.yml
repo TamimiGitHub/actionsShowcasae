@@ -38,7 +38,7 @@ jobs:
             **.md
           path: main
         
-      - name: Export markdown files
+      - name: Generate html codelabs and push to repo
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo $file
@@ -46,13 +46,12 @@ jobs:
             echo "CHANGED_CODELABS=${CHANGED_CODELABS} $file" >> $GITHUB_ENV
           done
 
-      - name: Push files to repo
-        run: |
           cd main
           git config user.name SollyBot
           git config user.email community@solace.com
           git commit -am "Adding ${{env.CHANGED_CODELABS}} html files"
           git push
-      
+
+
       - name: Update site rep
         run: echo "Webhook trigger action"
