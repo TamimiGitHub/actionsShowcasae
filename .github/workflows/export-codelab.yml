@@ -38,23 +38,19 @@ jobs:
             **.md
           path: main
         
-      - name: Generate html codelabs and push to repo
+      - name: Generate html codelabs
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo $file
             google-tools/claat/claat export -o main/codelabs/ main/$file
             echo "CHANGED_CODELABS=${CHANGED_CODELABS} $file" >> $GITHUB_ENV
           done
-
+          
+      - name: Push updates to codelabs repo
+        run: |
           cd main
-          git status
-          git remote -v
-          ls codelabs
           git config user.name SollyBot
           git config user.email community@solace.com
-          git commit -am "Adding ${{env.CHANGED_CODELABS}} html files"
+          git add codelabs/.
+          git commit -m "Adding ${{env.CHANGED_CODELABS}} html files"
           git push
-
-
-      - name: Push updates to codelabs repo
-        run: echo "Push updates to codelabs repo"
