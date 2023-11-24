@@ -46,11 +46,12 @@ jobs:
             echo "CHANGED_CODELABS=${CHANGED_CODELABS} $folder" >> $GITHUB_ENV
           done
           
-      - name: Push updates to codelabs repo
+      - name: Push updates to codelabs repo PAT
         run: |
           cd main
           git config user.name SollyBot
           git config user.email community@solace.com
           git add codelabs/.
           git commit -m "Adding ${{env.CHANGED_CODELABS}} html files"
+          git push https://${{env.PAT}}@github.com/TamimiGitHub/actionsShowcasae
           git push
