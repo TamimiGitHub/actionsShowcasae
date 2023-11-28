@@ -1,0 +1,25 @@
+name: PR TEST
+on:
+  pull_request: 
+    branches: [ master ]
+
+jobs:
+  Build_Preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout claat repo
+        uses: actions/checkout@v2
+        with:
+          repository: SolaceDev/solace-dev-codelabs
+          path: codelabs
+        
+      - name: Push updates to codelabs repo PAT
+        run: |
+          cd codelabs
+          git config user.name solacecommunity-bot
+          git config user.email community@solace.com
+          git remote set-url origin https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/TamimiGitHub/actionsShowcasae
+          echo "Test File" > test.txt
+          git add test.txt
+          git commit -m "Adding a test file"
+          git push origin master

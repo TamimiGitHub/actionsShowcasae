@@ -26,7 +26,7 @@ jobs:
         with:
           repository: SolaceDev/google-tools
           path: google-tools
-      
+          
       - name: Build claat
         run: cd google-tools/claat; go build .
       
@@ -49,9 +49,8 @@ jobs:
       - name: Push updates to codelabs repo PAT
         run: |
           cd main
-          git config user.name SollyBot
+          git config user.name solacecommunity-bot
           git config user.email community@solace.com
           git add codelabs/.
           git commit -m "Adding ${{env.CHANGED_CODELABS}} html files"
           git push https://${{env.PAT}}@github.com/TamimiGitHub/actionsShowcasae
-          git push
