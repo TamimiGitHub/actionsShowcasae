@@ -7,7 +7,7 @@ jobs:
   Build_Preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout claat repo
+      - name: Checkout Codelabs repo
         uses: actions/checkout@v2
         with:
           repository: SolaceDev/solace-dev-codelabs
@@ -18,8 +18,7 @@ jobs:
           cd codelabs
           git config user.name solacecommunity-bot
           git config user.email community@solace.com
-          git remote set-url origin https://solacecommunity-bot:${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/Solacedev/solace-dev-codelabs
           echo "Test File" > test.txt
           git add test.txt
           git commit -m "Adding a test file"
-          git push origin master
+          git push https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/SolaceDev/solace-dev-codelabs
