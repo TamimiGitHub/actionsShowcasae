@@ -27,4 +27,4 @@ jobs:
           echo "Test File" > test.txt
           git add test.txt
           git commit -m "Adding a test file"
-          git push https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/SolaceDev/solace-dev-codelabs
+          git push https://${{env.PAT}}@github.com/SolaceDev/solace-dev-codelabs
