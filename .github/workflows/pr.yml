@@ -24,7 +24,7 @@ jobs:
           echo "Test File" > test.txt
           git add test.txt
           git commit -m "Adding a test file"
-          git push origin master
-          # git push https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/SolaceDev/solace-dev-codelabs
+          # git push origin master
+          git push https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/SolaceDev/solace-dev-codelabs
         env:
           GITHUB_TOKEN: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
