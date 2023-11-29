@@ -12,7 +12,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
-          token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+          token: ${{ secrets.PAT }}
           repository: SolaceDev/solace-dev-codelabs
           path: codelabs
         
@@ -24,13 +24,13 @@ jobs:
           echo "Test File" > test.txt
           git add test.txt
           git commit -m "Adding a test file"
-          git push https://solacecommunity-bot:${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/Solacedev/solace-dev-codelabs
+          git push https://solacecommunity-bot:${{env.PAT}}@github.com/Solacedev/solace-dev-codelabs
         env:
-          GITHUB_TOKEN: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+          github_token: ${{ secrets.PAT }}
           repository: SolaceDev/solace-dev-codelabs
           directory: codelabs
