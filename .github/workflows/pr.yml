@@ -10,15 +10,13 @@ jobs:
       - name: Checkout Codelabs repo
         uses: actions/checkout@v2
         with:
+          ref: ${{ github.head_ref }}
+          persist-credentials: false
+          fetch-depth: 0
+          token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
           repository: SolaceDev/solace-dev-codelabs
           path: codelabs
         
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with: 
-          key: ${{ secrets.SSH_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
-
       - name: Push updates to codelabs repo PAT
         run: |
           cd codelabs
@@ -27,4 +25,7 @@ jobs:
           echo "Test File" > test.txt
           git add test.txt
           git commit -m "Adding a test file"
-          git push https://${{env.PAT}}@github.com/SolaceDev/solace-dev-codelabs
+          git push origin master
+          # git push https://${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/SolaceDev/solace-dev-codelabs
+        env:
+          GITHUB_TOKEN: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
