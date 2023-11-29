@@ -10,7 +10,6 @@ jobs:
       - name: Checkout Codelabs repo
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
           persist-credentials: false
           fetch-depth: 0
           token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
