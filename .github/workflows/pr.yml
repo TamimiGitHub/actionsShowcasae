@@ -27,3 +27,10 @@ jobs:
           git push https://solacecommunity-bot:${{env.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/Solacedev/solace-dev-codelabs
         env:
           GITHUB_TOKEN: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+          repository: SolaceDev/solace-dev-codelabs
+          directory: codelabs
