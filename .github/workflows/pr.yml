@@ -1,29 +1,39 @@
-name: PR TEST
+name: Extract Application Version ID from mule xml
 on:
   pull_request: 
     branches: [ master ]
+    paths:
+      - */**/*.xml
+
+env:
+  MULE_FILE: 'none'
 
 jobs:
-  Build_Preview:
+  Pase_XML:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Codelabs repo
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
-          token: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
-          repository: SolaceDev/solace-dev-codelabs
-          path: codelabs
         
-      - name: Push updates to codelabs repo PAT
+      - name: Get all changed markdown files
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: | 
+            **.xml
+
+      - name: Set path of xml file
         run: |
-          cd codelabs
-          git config user.name solacecommunity-bot
-          git config user.email community@solace.com
-          echo "Test File" > test.txt
-          git add test.txt
-          git commit -m "Adding a test file"
-          git push https://solacecommunity-bot:${{secrets.SOLACE_COMMUNITY_BOT_ULTIMATE}}@github.com/Solacedev/solace-dev-codelabs
-        env:
-          GITHUB_TOKEN: ${{ secrets.SOLACE_COMMUNITY_BOT_ULTIMATE }}
+          for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
+            echo "MULE_FILE=$file" >> $GITHUB_ENV
+          done
+
+      - name: Extract EP Applicatin Version ID from XML
+        id: epApplicationVersionId
+        uses: mavrosxristoforos/get-xml-info@1.2.1
+        with:
+          xml-file: ${{env.MULE_FILE}}
+          xpath: "/mule/global-property[@name='epApplicationVersionId']/@value"
+
+      - name: Echo Application Version ID
+        run: echo ${{ steps.epApplicationVersionId.outputs.info }}
