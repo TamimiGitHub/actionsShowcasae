@@ -2,8 +2,6 @@ name: Extract Application Version ID from mule xml
 on:
   pull_request: 
     branches: [ master ]
-    paths:
-      - /**/*.xml
 
 env:
   MULE_FILE: 'none'
