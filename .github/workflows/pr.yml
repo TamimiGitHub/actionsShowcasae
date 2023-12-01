@@ -3,7 +3,7 @@ on:
   pull_request: 
     branches: [ master ]
     paths:
-      - */**/*.xml
+      - /**/*.xml
 
 env:
   MULE_FILE: 'none'
