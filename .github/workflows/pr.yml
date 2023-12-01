@@ -31,7 +31,7 @@ jobs:
         uses: mavrosxristoforos/get-xml-info@1.2.1
         with:
           xml-file: ${{env.MULE_FILE}}
-          xpath: "/mule/global-property[@name='epApplicationVersionId']/@value"
+          xpath: "/mule/global-property[@name='epApplicationVersionId']"
 
       - name: Echo Application Version ID
         run: echo ${{ steps.epApplicationVersionId.outputs.info }}
