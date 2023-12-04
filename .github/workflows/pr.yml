@@ -31,7 +31,7 @@ jobs:
         id: epApplicationVersionId
         with:
           regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
-          flags: "gm"
+          flags: "sgm"
           input: ${{ env.MULE_FILE }}
 
       # - name: Extract EP Applicatin Version ID from XML
