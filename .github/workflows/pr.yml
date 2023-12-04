@@ -26,12 +26,20 @@ jobs:
             echo "MULE_FILE=$file" >> $GITHUB_ENV
           done
 
-      - name: Extract EP Applicatin Version ID from XML
+      - name: Extract Application Version ID from Mule config
+        uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
-        uses: mavrosxristoforos/get-xml-info@1.2.1
         with:
-          xml-file: ${{env.MULE_FILE}}
-          xpath: "/mule/global-property[@name='epApplicationVersionId']"
+          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
+          flags: "gm"
+          input: ${{ env.MULE_FILE }}
+
+      # - name: Extract EP Applicatin Version ID from XML
+      #   id: epApplicationVersionId
+      #   uses: mavrosxristoforos/get-xml-info@1.2.1
+      #   with:
+      #     xml-file: ${{env.MULE_FILE}}
+      #     xpath: "/mule/global-property[@name='epApplicationVersionId']/@value"
 
       - name: Echo Application Version ID
-        run: echo ${{ steps.epApplicationVersionId.outputs.info }}
+        run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
