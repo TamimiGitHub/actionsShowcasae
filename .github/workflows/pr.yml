@@ -3,9 +3,8 @@ on:
   pull_request: 
     branches: [ master ]
 
-# env:
-#   MULE_FILE: 'none'
-
+env: 
+  SOLACE_MESSAGING_SERVICE: PROD-solace
 jobs:
   Pase_XML:
     runs-on: ubuntu-latest
@@ -24,7 +23,6 @@ jobs:
         id: mule_xml
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            # echo "MULE_FILE=$file" >> $GITHUB_ENV
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> $GITHUB_OUTPUT
             done
 
@@ -36,12 +34,17 @@ jobs:
           flags: "gm"
           input: ${{steps.mule_xml.outputs.xml}}
 
-      # - name: Extract EP Applicatin Version ID from XML
-      #   id: epApplicationVersionId
-      #   uses: mavrosxristoforos/get-xml-info@1.2.1
-      #   with:
-      #     xml-file: ${{env.MULE_FILE}}
-      #     xpath: "/mule/global-property[@name='epApplicationVersionId']/@value"
-
       - name: Echo Application Version ID
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
+
+      - name: Promote Application
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.2
+        with:
+          BROKER_TYPE: solace
+          SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
+          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          TF_VAR_solace_url: ${{ secrets.TF_VAR_solace_url }}
+          TF_VAR_semp_username: ${{ secrets.TF_VAR_semp_username }}
+          TF_VAR_semp_password: ${{ secrets.TF_VAR_semp_password }}
+          SOL_MSG_VPN: ${{ secrets.SOL_MSG_VPN }}
+          APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
