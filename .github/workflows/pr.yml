@@ -26,7 +26,7 @@ jobs:
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo "MULE_FILE=$file" >> $GITHUB_ENV
           done
-          cat ${{env.MULE_FILE}}
+          cat $MULE_FILE
 
       - name: Extract Application Version ID from Mule config
         uses: tmelliottjr/extract-regex-action@v1.4.0
