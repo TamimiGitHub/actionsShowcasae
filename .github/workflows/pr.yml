@@ -38,7 +38,7 @@ jobs:
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
       - name: Promote Application
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.2
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.1
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
