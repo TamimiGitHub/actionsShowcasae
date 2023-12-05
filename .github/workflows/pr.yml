@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 
 env:
-  MULE_FILE: 'none'
+  MULE_FILE_CONTENT: 'none'
 
 jobs:
   Pase_XML:
@@ -23,7 +23,7 @@ jobs:
       - name: Set path of xml file
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            echo "MULE_FILE=$file" >> $GITHUB_ENV
+            echo "MULE_FILE_CONTENT=`cat $file`" >> $GITHUB_ENV
           done
 
       - name: Extract Application Version ID from Mule config
@@ -32,13 +32,13 @@ jobs:
         with:
           regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
           flags: "sgm"
-          input: ${{ env.MULE_FILE }}
+          input: ${{ env.MULE_FILE_CONTENT }}
 
       # - name: Extract EP Applicatin Version ID from XML
       #   id: epApplicationVersionId
       #   uses: mavrosxristoforos/get-xml-info@1.2.1
       #   with:
-      #     xml-file: ${{env.MULE_FILE}}
+      #     xml-file: ${{env.MULE_FILE_CONTENT}}
       #     xpath: "/mule/global-property[@name='epApplicationVersionId']/@value"
 
       - name: Echo Application Version ID
