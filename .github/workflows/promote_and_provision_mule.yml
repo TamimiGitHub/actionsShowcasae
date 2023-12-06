@@ -1,12 +1,13 @@
-name: Extract Application Version ID from mule xml
+name: Promote and Provision Application Version ID from mule xml
 on:
-  pull_request: 
+  push: 
     branches: [ master ]
 
 env: 
-  SOLACE_MESSAGING_SERVICE: PROD-solace
+  SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
+
 jobs:
-  Pase_XML:
+  promote_provision:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Codelabs repo
@@ -24,7 +25,7 @@ jobs:
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> $GITHUB_OUTPUT
-            done
+          done
 
       - name: Extract Application Version ID from Mule config
         uses: tmelliottjr/extract-regex-action@v1.4.0
@@ -37,7 +38,7 @@ jobs:
       - name: Echo Application Version ID
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
-      - name: Promote Application
+      - name: Promote and Provision Application
         uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.1
         with:
           BROKER_TYPE: solace
