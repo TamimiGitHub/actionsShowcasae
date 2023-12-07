@@ -2,11 +2,10 @@ name: Promote and Provision Application Version ID from mule xml
 on:
   push: 
     branches: [ master ]
-    paths:
-      - *.xml
 
 env: 
   SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
+  CANCEL_WORKFLOW: ${{ true }}
 
 jobs:
   promote_provision:
@@ -27,7 +26,12 @@ jobs:
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> $GITHUB_OUTPUT
+            echo "CANCEL_WORKFLOW=false" >> $GITHUB_ENV
           done
+      
+      - name: Cancel Workflow if no asyncAPI file present in PR
+        if: env.CANCEL_WORKFLOW == 'true'
+        uses: andymckay/cancel-action@0.2
 
       - name: Extract Application Version ID from Mule config
         uses: tmelliottjr/extract-regex-action@v1.4.0
