@@ -40,7 +40,7 @@ jobs:
 
       - name: Promote and Provision Application
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.11
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.1
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
