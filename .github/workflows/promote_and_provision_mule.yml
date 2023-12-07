@@ -5,7 +5,6 @@ on:
 
 env: 
   SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
-  CANCEL_WORKFLOW: ${{ true }}
 
 jobs:
   promote_provision:
@@ -26,13 +25,8 @@ jobs:
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> $GITHUB_OUTPUT
-            echo "CANCEL_WORKFLOW=false" >> $GITHUB_ENV
           done
       
-      - name: Cancel Workflow if no asyncAPI file present in PR
-        if: env.CANCEL_WORKFLOW == 'true'
-        uses: andymckay/cancel-action@0.2
-
       - name: Extract Application Version ID from Mule config
         uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
@@ -45,7 +39,8 @@ jobs:
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
       - name: Promote and Provision Application
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.2
+        if: ${{ steps.epApplicationVersionId.outputs.resultString }}
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.11
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
