@@ -1,6 +1,6 @@
 name: Promote and Provision Application Version ID from mule xml
 on:
-  push: 
+  pull_request: 
     branches: [ master ]
 
 env: 
