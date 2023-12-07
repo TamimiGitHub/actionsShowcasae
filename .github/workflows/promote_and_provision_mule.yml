@@ -2,6 +2,8 @@ name: Promote and Provision Application Version ID from mule xml
 on:
   push: 
     branches: [ master ]
+    paths:
+      - *.xml
 
 env: 
   SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
@@ -39,7 +41,7 @@ jobs:
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
       - name: Promote and Provision Application
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.1
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.2
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
