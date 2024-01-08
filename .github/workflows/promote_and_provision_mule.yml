@@ -18,7 +18,7 @@ jobs:
         uses: tj-actions/changed-files@v40
         with:
           files: | 
-            **.xml
+            src/**.xml
 
       - name: Read Mule XML content
         id: mule_xml
