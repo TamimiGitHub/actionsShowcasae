@@ -7,23 +7,23 @@ env:
   SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
 
 jobs:
-  promote_provision:
+  promote-provision:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Codelabs repo
         uses: actions/checkout@v2
         
-      - name: Get all changed markdown files
-        id: changed-markdown-files
+      - name: Get all changed xml files
+        id: changed-xml-files
         uses: tj-actions/changed-files@v40
         with:
           files: | 
-            **.xml
+            src/**.xml
 
       - name: Read Mule XML content
         id: mule_xml
         run: |
-          for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
+          for file in ${{ steps.changed-xml-files.outputs.all_changed_files }}; do
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> $GITHUB_OUTPUT
           done
       
@@ -36,11 +36,11 @@ jobs:
           input: ${{steps.mule_xml.outputs.xml}}
 
       - name: Echo Application Version ID
-        run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
+        run: echo "Promoting Application Version ID ${{ steps.epApplicationVersionId.outputs.resultString }}"
 
       - name: Promote and Provision Application
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.1
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.9.11
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
