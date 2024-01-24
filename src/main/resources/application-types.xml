@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="shipping" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="shipping_message" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="employee" format="json">
+      <types:shape format="json-schema" location="schemas/employee.0.0.1.json"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#86fdbc1e-6d3e-4b06-bfd0-ce77a9248a75">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="employee"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#5f2f01b3-ae85-491f-bfbf-618ed84a28d8">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="employee"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

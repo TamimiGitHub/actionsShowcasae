@@ -1,0 +1,9 @@
+{"namespace": "io.confluent.examples.streams.avro.microservices",
+ "type": "record",
+ "name": "Shipping",
+ "fields": [
+     {"name": "id", "type": "string"},
+     {"name": "customerId", "type": "long"},
+     {"name": "trackingNumber", "type": "int"}
+ ]
+}
