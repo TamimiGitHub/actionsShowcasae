@@ -12,6 +12,8 @@
 # TF_VAR_semp_username: SEMP username for target broker provisioning
 # TF_VAR_semp_password: SEMP password for target broker provisioning
 # SOL_MSG_VPN: Solace VPN
+# AWS_ACCESS_KEY_ID: AWS ACCESS KEY ID
+# AWS_SECRET_ACCESS_KEY: AWS SECRET ACCESS KEY
 
 name: Promote and Provision Application Version ID from mule xml
 on:
@@ -58,13 +60,16 @@ jobs:
 
       - name: Promote and Provision Application
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.1
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.2
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
           SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           TF_VAR_solace_url: ${{ secrets.TF_VAR_solace_url }}
           TF_VAR_semp_username: ${{ secrets.TF_VAR_semp_username }}
           TF_VAR_semp_password: ${{ secrets.TF_VAR_semp_password }}
           SOL_MSG_VPN: ${{ secrets.SOL_MSG_VPN }}
           APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
+          PLAN_ONLY: true
