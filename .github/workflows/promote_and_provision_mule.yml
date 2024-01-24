@@ -24,7 +24,11 @@ jobs:
         id: mule_xml
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            echo -e "xml<<EOF\n$(cat $file)\nEOF" >> "$GITHUB_OUTPUT"
+            echo "YOLO"
+            echo $file
+            echo 'xml<<EOF' >> $GITHUB_OUTPUT
+            echo $(cat $file) >> $GITHUB_OUTPUT
+            echo 'EOF' >> $GITHUB_OUTPUT
           done
       
       - name: Echo XML file
