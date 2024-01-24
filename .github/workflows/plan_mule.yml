@@ -61,7 +61,7 @@ jobs:
       - name: Plan
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
         id: plan
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.6
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.8
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
