@@ -56,15 +56,15 @@ jobs:
       - name: Echo Application Version ID
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
-      # - name: Promote and Provision Application
-      #   if: ${{ steps.epApplicationVersionId.outputs.resultString }}
-      #   uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.1
-      #   with:
-      #     BROKER_TYPE: solace
-      #     SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
-      #     SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
-      #     TF_VAR_solace_url: ${{ secrets.TF_VAR_solace_url }}
-      #     TF_VAR_semp_username: ${{ secrets.TF_VAR_semp_username }}
-      #     TF_VAR_semp_password: ${{ secrets.TF_VAR_semp_password }}
-      #     SOL_MSG_VPN: ${{ secrets.SOL_MSG_VPN }}
-      #     APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
+      - name: Promote and Provision Application
+        if: ${{ steps.epApplicationVersionId.outputs.resultString }}
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.10.1
+        with:
+          BROKER_TYPE: solace
+          SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
+          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          TF_VAR_solace_url: ${{ secrets.TF_VAR_solace_url }}
+          TF_VAR_semp_username: ${{ secrets.TF_VAR_semp_username }}
+          TF_VAR_semp_password: ${{ secrets.TF_VAR_semp_password }}
+          SOL_MSG_VPN: ${{ secrets.SOL_MSG_VPN }}
+          APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
