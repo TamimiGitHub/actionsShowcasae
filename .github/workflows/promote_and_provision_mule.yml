@@ -33,7 +33,7 @@ jobs:
         uses: tj-actions/changed-files@v40
         with:
           files: | 
-            **.xml
+            src/main/mule/**.xml
       
       - name: Echo changed files
         run: echo ${{steps.changed-markdown-files.outputs.all_changed_files}}
