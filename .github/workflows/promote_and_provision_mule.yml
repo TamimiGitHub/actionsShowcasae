@@ -27,6 +27,9 @@ jobs:
             echo -e "xml<<EOF\n$(cat $file)\nEOF" >> "$GITHUB_OUTPUT"
           done
       
+      - name: Echo XML file
+        run: echo ${{steps.mule_xml.outputs.xml}}
+      
       - name: Extract Application Version ID from Mule config
         uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
