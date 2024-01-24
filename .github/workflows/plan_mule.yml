@@ -8,14 +8,14 @@
 
 # To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
 # SOLACE_CLOUD_TOKEN: Solace Cloud Token
-# TF_VAR_solace_url: SEMP URL for target broker provisioning
-# TF_VAR_semp_username: SEMP username for target broker provisioning
-# TF_VAR_semp_password: SEMP password for target broker provisioning
+# TF_VAR_solace_url: SEMP URL for target broker
+# TF_VAR_semp_username: SEMP username for target broker
+# TF_VAR_semp_password: SEMP password for target broker
 # SOL_MSG_VPN: Solace VPN
 # AWS_ACCESS_KEY_ID: AWS ACCESS KEY ID
 # AWS_SECRET_ACCESS_KEY: AWS SECRET ACCESS KEY
 
-name: Promote and Provision Application Version ID from mule xml
+name: Plan Provision for Application Version ID from mule xml
 on:
   pull_request: 
     branches: [ master ]
@@ -24,7 +24,7 @@ env:
   SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
 
 jobs:
-  promote_provision:
+  plan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -58,10 +58,10 @@ jobs:
       - name: Echo Application Version ID
         run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
 
-      - name: Promote and Provision Application
+      - name: Plan
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
         id: plan
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.5
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.6
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
