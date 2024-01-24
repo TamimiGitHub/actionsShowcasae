@@ -35,24 +35,17 @@ jobs:
           files: | 
             src/main/mule/**.xml
       
-      - name: Echo changed files
-        run: echo ${{steps.changed-markdown-files.outputs.all_changed_files}}
-
       - name: Read Mule XML content
         id: mule_xml
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            echo "YOLO"
-            echo $file
             echo 'xml<<EOF' >> $GITHUB_OUTPUT
             echo $(cat $file) >> $GITHUB_OUTPUT
             echo 'EOF' >> $GITHUB_OUTPUT
           done
       
-      - name: Echo XML file
-        run: echo ${{steps.mule_xml.outputs.xml}}
-      
       - name: Extract Application Version ID from Mule config
+        if: ${{ steps.mule_xml.outputs.xml }}
         uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
         with:
