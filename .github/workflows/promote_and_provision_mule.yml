@@ -60,7 +60,8 @@ jobs:
 
       - name: Promote and Provision Application
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.4
+        id: plan
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.5
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
@@ -73,3 +74,40 @@ jobs:
           SOL_MSG_VPN: ${{ secrets.SOL_MSG_VPN }}
           APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
           PLAN_ONLY: true
+
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "${{ steps.plan.outputs.stdout }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style')
+            })
+
+            // 2. Prepare format of the comment
+            const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+      
+            <details><summary>Show Plan</summary>
+      
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+      
+            </details>
+      
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\` *`;
+      
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
