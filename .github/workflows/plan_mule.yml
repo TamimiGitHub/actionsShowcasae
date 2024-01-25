@@ -61,7 +61,7 @@ jobs:
       - name: Plan
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
         id: plan
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.11
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.12
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
@@ -75,8 +75,11 @@ jobs:
           APPLICATION_VERSION_ID: ${{ steps.epApplicationVersionId.outputs.resultString }}
           PLAN_ONLY: true
 
-      - name: Echo plan output
+      - name: Echo plan tf_plan output
         run: echo ${{ steps.plan.outputs.tf_plan }}
+
+      - name: Echo plan test output
+        run: echo ${{ steps.plan.outputs.test }}
 
       # - uses: actions/github-script@v6
       #   if: github.event_name == 'pull_request'
