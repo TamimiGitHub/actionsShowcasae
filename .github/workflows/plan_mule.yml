@@ -61,7 +61,7 @@ jobs:
       - name: Plan
         if: ${{ steps.epApplicationVersionId.outputs.resultString }}
         id: plan
-        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.12
+        uses: SolaceDev/solace-ep-provisioning-github-action@v1.11.13
         with:
           BROKER_TYPE: solace
           SOLACE_MESSAGING_SERVICE: ${{ env.SOLACE_MESSAGING_SERVICE }}
@@ -78,42 +78,39 @@ jobs:
       - name: Echo plan tf_plan output
         run: echo ${{ steps.plan.outputs.tf_plan }}
 
-      - name: Echo plan test output
-        run: echo ${{ steps.plan.outputs.test }}
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "${{ steps.plan.outputs.tf_plan }}"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // 1. Retrieve existing bot comments for the PR
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            })
+            const botComment = comments.find(comment => {
+              return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style')
+            })
 
-      # - uses: actions/github-script@v6
-      #   if: github.event_name == 'pull_request'
-      #   env:
-      #     PLAN: "${{ steps.plan.outputs.tf_plan }}"
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     script: |
-      #       // 1. Retrieve existing bot comments for the PR
-      #       const { data: comments } = await github.rest.issues.listComments({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         issue_number: context.issue.number,
-      #       })
-      #       const botComment = comments.find(comment => {
-      #         return comment.user.type === 'Bot' && comment.body.includes('Terraform Format and Style')
-      #       })
-
-      #       // 2. Prepare format of the comment
-      #       const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            // 2. Prepare format of the comment
+            const output = `#### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
       
-      #       <details><summary>Show Plan</summary>
+            <details><summary>Show Plan</summary>
       
-      #       \`\`\`\n
-      #       ${process.env.PLAN}
-      #       \`\`\`
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
       
-      #       </details>
+            </details>
       
-      #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\` *`;
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\` *`;
       
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: output
-      #       })
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
