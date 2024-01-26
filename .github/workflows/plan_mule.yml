@@ -76,7 +76,7 @@ jobs:
           PLAN_ONLY: true
 
       - name: Echo plan tf_plan output
-        run: echo ${{ steps.plan.outputs.tf_plan }}
+        run: echo "${{ steps.plan.outputs.tf_plan }}"
 
       - uses: actions/github-script@v6
         if: github.event_name == 'pull_request'
