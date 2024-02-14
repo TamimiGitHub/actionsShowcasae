@@ -1,0 +1,60 @@
+# This workflow will be triggered on every commit merge to the defined branch
+# Note : if an XML file is not present, the job is canceled
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# To get started, configure the following in your repos secrets https://docs.github.com/en/actions/security-guides/encrypted-secrets
+# SOLACE_CLOUD_TOKEN: Solace Cloud Token
+# TF_VAR_solace_url: SEMP URL for target broker
+# TF_VAR_semp_username: SEMP username for target broker
+# TF_VAR_semp_password: SEMP password for target broker
+# SOL_MSG_VPN: Solace VPN
+# AWS_ACCESS_KEY_ID: AWS ACCESS KEY ID
+# AWS_SECRET_ACCESS_KEY: AWS SECRET ACCESS KEY
+
+name: Plan Provision for Application Version ID from mule xml
+on:
+  pull_request: 
+    branches: [ master ]
+
+env: 
+  SOLACE_MESSAGING_SERVICE: PRODUCTION-solace
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        
+      - name: Get all changed markdown files
+        id: changed-markdown-files
+        uses: tj-actions/changed-files@v40
+        with:
+          files: | 
+            src/main/mule/**.xml
+      
+      - name: Read Mule XML content
+        id: mule_xml
+        run: |
+          for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
+            echo $file
+            echo 'xml<<EOF' >> $GITHUB_OUTPUT
+            echo $(cat $file) >> $GITHUB_OUTPUT
+            echo 'EOF' >> $GITHUB_OUTPUT
+          done
+      
+      - name: Extract Application Version ID from Mule config
+        if: ${{ steps.mule_xml.outputs.xml }}
+        uses: tmelliottjr/extract-regex-action@v1.4.0
+        id: epApplicationVersionId
+        with:
+          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
+          flags: "gm"
+          input: ${{steps.mule_xml.outputs.xml}}
+
+      - name: Echo Application Version ID
+        run: echo ${{ steps.epApplicationVersionId.outputs.resultString }}
