@@ -54,7 +54,7 @@ jobs:
         uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
         with:
-          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
+          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*?)(?=\")' 
           flags: "gm"
           input: ${{steps.mule_xml.outputs.xml}}
 
