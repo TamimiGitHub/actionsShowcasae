@@ -41,9 +41,12 @@ jobs:
         id: mule_xml
         run: |
           for file in ${{ steps.changed-markdown-files.outputs.all_changed_files }}; do
-            echo 'xml<<EOF' >> $GITHUB_OUTPUT
-            echo $(cat $file) >> $GITHUB_OUTPUT
-            echo 'EOF' >> $GITHUB_OUTPUT
+            if [[ ${file} != *"Global"* ]];then
+              echo "Reading file: $file"
+              echo 'xml<<EOF' >> $GITHUB_OUTPUT
+              echo $(cat $file) >> $GITHUB_OUTPUT
+              echo 'EOF' >> $GITHUB_OUTPUT
+            fi
           done
       
       - name: Extract Application Version ID from Mule config
@@ -51,7 +54,7 @@ jobs:
         uses: tmelliottjr/extract-regex-action@v1.4.0
         id: epApplicationVersionId
         with:
-          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*)(?=\")' 
+          regex: '(?<=name=\"epApplicationVersionId\" value=\")(.*?)(?=\")' 
           flags: "gm"
           input: ${{steps.mule_xml.outputs.xml}}
 
