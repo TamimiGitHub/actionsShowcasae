@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:solace="http://www.mulesoft.org/schema/mule/solace" xmlns:xml-module="http://www.mulesoft.org/schema/mule/xml-module" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/solace http://www.mulesoft.org/schema/mule/solace/current/mule-solace.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/xml-module http://www.mulesoft.org/schema/mule/xml-module/current/mule-xml-module.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <solace:config doc:name="Solace PubSub+ Connector Config" doc:id="9092a2bc-6f2e-472a-81ae-f3e7a9a568d3" name="Solace_PubSub__Connector_Config">
+    <solace:connection brokerHost="${solace.connection.brokerHost}" msgVPN="${solace.connection.messageVpn}" clientUserName="${solace.connection.clientUsername}" password="${solace.connection.clientPassword}">
+      <solace:jcsmp-properties/>
+    </solace:connection>
+    <solace:event-portal-config cloudApiToken="${solace.eventPortal.apiToken}"/>
+  </solace:config>
+  <global-property doc:name="Global Property: Default Environment" doc:id="0ccc4e53-1ab0-4394-b0cc-7ac259037e45" name="env" value="dev"/>
+  <configuration-properties doc:name="Configuration Properties File" doc:id="532846f5-5dd6-40cd-965d-2a3887d08a29" file="${env}.yaml"/>
+</mule>

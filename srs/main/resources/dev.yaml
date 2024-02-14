@@ -1,0 +1,8 @@
+solace:
+  connection:
+    brokerHost: tcps://mr-your-service.messaging.solace.cloud:55443
+    messageVpn: defaultVpn
+    clientUsername: defaultUser
+    clientPassword: defaultPassword
+  eventPortal:
+    apiToken: eySetYourCloudApiTokenHere

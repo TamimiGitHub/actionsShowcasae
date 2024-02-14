@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:solace="http://www.mulesoft.org/schema/mule/solace" xmlns:xml-module="http://www.mulesoft.org/schema/mule/xml-module" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/solace http://www.mulesoft.org/schema/mule/solace/current/mule-solace.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/xml-module http://www.mulesoft.org/schema/mule/xml-module/current/mule-xml-module.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+  <global-property doc:name="Global Property" doc:id="9258ba20-8974-4691-b38f-d69cc0280a96" name="epApplicationVersionId" value="9e1w024804q"/>
+  <flow doc:id="c36204ce-0425-4dc6-82b8-66da724500b9" name="Ingress.COFFEE.ORDERMGT.STATUS.queue">
+    <solace:queue-listener doc:name="COFFEE.ORDERMGT.STATUS Listener" doc:id="c3e68691-e163-4f73-bd69-811938b256be" ackMode="AUTOMATIC_ON_FLOW_COMPLETION" address="COFFEE.ORDERMGT.STATUS" config-ref="Solace_PubSub__Connector_Config"/>
+    <xml-module:validate-schema doc:name="Validate XML schema" doc:id="d7e538db-586f-45fb-af24-fa054abd9468"/>
+    <flow-ref doc:name="Business Logic" doc:id="2f104671-5bee-4cd6-b98c-47c6c4969cac" name="BizLogic.COFFEE.ORDERMGT.STATUS.queue"/>
+  </flow>
+  <flow doc:id="2c14b7a9-392d-4431-9206-ccef80e6238b" name="Ingress.DirectSubscriber.topic">
+    <solace:topic-listener doc:name="Direct Topic Subscriber" doc:id="1a6ef63a-855a-4d40-950b-e39d86808fda" config-ref="Solace_PubSub__Connector_Config" topics="coffeeshop/order/status/v1/inprogress/*/*/*/*" contentType="application/json"/>
+    <json:validate-schema doc:name="Validate JSON schema" doc:id="42b2ab82-b7b0-408a-955d-6fdb33343ee7" schema="schemas/CoffeeShop-Order_ETA__0.2.0.json"/>
+    <flow-ref doc:name="Business Logic" doc:id="ebb3d3a7-32fb-4d78-9cdc-d2e434cd86c7" name="BizLogic.DirectSubscriber.topic"/>
+  </flow>
+  <flow doc:id="d2014839-bc98-4846-b2c4-c7c716fa184a" name="Ingress.COFFEE.ORDERMGT.NEWORDER.queue">
+    <solace:queue-listener doc:name="COFFEE.ORDERMGT.NEWORDER Listener" doc:id="c9c6f147-0fef-40d3-9e8a-2218f8c9cf5a" ackMode="AUTOMATIC_ON_FLOW_COMPLETION" address="COFFEE.ORDERMGT.NEWORDER" config-ref="Solace_PubSub__Connector_Config"/>
+    <json:validate-schema doc:name="Validate JSON schema" doc:id="62c30262-74ff-46bf-8130-7f7035e3c28b" schema="schemas/CoffeeShop-New_Order_0.2.0.json"/>
+    <flow-ref doc:name="Business Logic" doc:id="f745e24a-0188-4350-86fd-b3e466498c80" name="BizLogic.COFFEE.ORDERMGT.NEWORDER.queue"/>
+  </flow>
+  <sub-flow doc:id="58dfa5e6-8a2d-4d6d-9136-3be3b94c4c15" name="BizLogic.COFFEE.ORDERMGT.STATUS.queue">
+    <ee:transform doc:id="f929b0ce-4010-40fa-a88a-b0471cad8a34">
+      <ee:message>
+        <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <flow-ref doc:name="Connect this to the correct egress flow" doc:id="b416e175-a611-49d0-a7ce-b623881a0323" name="BizLogic.COFFEE.ORDERMGT.STATUS.queue"/>
+  </sub-flow>
+  <sub-flow doc:id="55fcb9ca-8dad-4d66-9920-0e2d96746476" name="BizLogic.DirectSubscriber.topic">
+    <ee:transform doc:id="8257874f-6199-4e4d-8176-865b4475a4d5">
+      <ee:message>
+        <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <flow-ref doc:name="Connect this to the correct egress flow" doc:id="265f631d-ea9d-4240-9acb-4a321e0c1b5d" name="BizLogic.DirectSubscriber.topic"/>
+  </sub-flow>
+  <sub-flow doc:id="fba12de9-6aee-40d1-8555-e6f94eb109fa" name="BizLogic.COFFEE.ORDERMGT.NEWORDER.queue">
+    <ee:transform doc:id="0aefedd5-a7fe-47d7-b3bb-bb537858a573">
+      <ee:message>
+        <ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+      </ee:message>
+    </ee:transform>
+    <flow-ref doc:name="Connect this to the correct egress flow" doc:id="e4d71f01-9483-4dae-8184-c8bfa8f7640d" name="BizLogic.COFFEE.ORDERMGT.NEWORDER.queue"/>
+  </sub-flow>
+  <sub-flow doc:id="c2550149-f807-41ce-b9c6-8767a8a1b23b" name="Egress.OM-OrderUpdate.topic">
+    <set-variable doc:name="Dynamic Topic Parameter: country" doc:id="c06dca7e-3e2d-4dfd-99f3-f769a6c3146a" variableName="country" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: requestId" doc:id="ae5d2447-2ac9-4418-91dd-ae1e88d07946" variableName="requestId" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: source" doc:id="ae68c4f9-e329-423a-8ae0-9d24d8378921" variableName="source" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: storeId" doc:id="caab1b47-ebba-4956-b8e6-c13145a43f86" variableName="storeId" value=""/>
+    <json:validate-schema doc:name="Validate JSON schema" doc:id="bf995b3d-6fde-4ad8-a39b-5bfa9a511d2e" schema="schemas/CoffeeShop-OrderStatus_0.2.0.json"/>
+    <solace:publish doc:name="Publish OM-Order Update Event" doc:id="d7419dfa-2892-43a8-82d9-e469db22fd1a" address="&quot;coffeeshop/order/update/v1/$(vars.source as String)/$(vars.country as String)/$(vars.storeId as String)/$(vars.requestId as String)&quot;" config-ref="Solace_PubSub__Connector_Config">
+      <solace:message messageType="TEXT_MESSAGE"/>
+    </solace:publish>
+  </sub-flow>
+  <sub-flow doc:id="355e5a65-7a2c-4eb9-a165-493b47a5910b" name="Egress.OM-OrderDetails.topic">
+    <set-variable doc:name="Dynamic Topic Parameter: country" doc:id="9991e326-e17e-4276-92da-bd78a876185b" variableName="country" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: orderId" doc:id="9d9a3178-fee9-47ed-9ccf-3e5775d3918a" variableName="orderId" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: source" doc:id="5dfbe595-9a46-40fe-8700-62d03ca001d3" variableName="source" value=""/>
+    <set-variable doc:name="Dynamic Topic Parameter: storeId" doc:id="a5415ba8-99e5-4dec-b9c2-e4bdf52273fe" variableName="storeId" value=""/>
+    <json:validate-schema doc:name="Validate JSON schema" doc:id="ee132b25-5887-40d3-8984-8aa329f89b35" schema="schemas/CoffeeShop-Order_Details_0.2.0.json"/>
+    <solace:publish doc:name="Publish OM-Order Details Event" doc:id="22676d10-3224-411c-99f0-9abf74e93775" address="&quot;coffeeshop/order/details/v1/$(vars.source as String)/$(vars.country as String)/$(vars.storeId as String)/$(vars.orderId as String)&quot;" config-ref="Solace_PubSub__Connector_Config">
+      <solace:message messageType="TEXT_MESSAGE"/>
+    </solace:publish>
+  </sub-flow>
+</mule>
