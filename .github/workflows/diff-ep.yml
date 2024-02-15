@@ -13,8 +13,8 @@ jobs:
       - name: Calculate diff
         uses: j-setiawan/ep-deployment-preview-action@v1
         with:
-          application_version_id: 'c6e5koz6t7v'
-          event_broker_id: '5c38mdgufxr'
+          application_version_id: c6e5koz6t7v
+          event_broker_id: 5c38mdgufxr
           solace_cloud_token: ${{ secrets.SOLACE_CLOUD_TOKEN }}
       
       - name: Create PR comment
