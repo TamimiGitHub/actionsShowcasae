@@ -1,3 +1,1 @@
-# Actions Showcase
-
-http://somefoobar.com
+# mule-coffeshop-order-mgmt
