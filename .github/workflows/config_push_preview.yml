@@ -12,13 +12,10 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-        
-      - name: Checkout terraform configuration repo
-        uses: actions/checkout@v4
+      - name: Preview Application Version Deployment Plan
+        uses: SolaceDev/solace-ep-config-push
         with:
-          repository: TamimiGitHub/solace-terraform-provisioning
-          path: terraform
+          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
+          EVENT_MESH_NAME: ${{ env.EVENT_MESH_NAME }}
+          PREVIEW_ONLY: ${{ env.PREVIEW_ONLY }}
