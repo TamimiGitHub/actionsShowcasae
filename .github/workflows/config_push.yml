@@ -1,20 +1,17 @@
-name: Config Push
+name: Preview Appication Deployment Plan
 
 # Trigger on pull request only
 on:
   pull_request:
     branches:
       - main
-
-
-#  add env variable
 env:
-  APPLICATION_VERSION_ID: "puu886to6kd"
-  EVENT_MESH_NAME: "us-central-solace-Prod"
+  APPLICATION_VERSION_ID: puu886to6kd
+  EVENT_MESH_NAME: us-central-solace-Prod
   PREVIEW_ONLY: TRUE
 
 jobs:
-  build:
+  preview:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Application Version ID
