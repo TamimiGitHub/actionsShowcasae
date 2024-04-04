@@ -13,9 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Preview Application Version Deployment Plan
+        id: plan
         uses: SolaceDev/solace-ep-config-push@v0.1.0
         with:
           SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
           APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
           EVENT_MESH_NAME: ${{ env.EVENT_MESH_NAME }}
           PREVIEW_ONLY: ${{ env.PREVIEW_ONLY }}
+
+      - name: Echo plan deployment_plan output
+        run: echo "${{ steps.plan.outputs.deployment_plan }}"
