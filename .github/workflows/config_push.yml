@@ -1,25 +1,22 @@
 name: Config Push
-
-# Trigger on pull request only
 on:
-  pull_request:
-    branches:
-      - main
+  pull_request: 
+    branches: [ master ]
 
-
-#  add env variable
-env:
-  APPLICATION_VERSION_ID: "puu886to6kd"
-  EVENT_MESH_NAME: "us-central-solace-Prod"
+env: 
+  APPLICATION_VERSION_ID: puu886to6kd
+  EVENT_MESH_NAME: us-central-solace-Prod
   PREVIEW_ONLY: TRUE
 
 jobs:
-  build:
+  plan:
     runs-on: ubuntu-latest
-
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        
       - name: Deploy Application Version ID
-        uses: SolaceDev/solace-ep-provisioning-github-action
+        uses: SolaceDev/solace-ep-config-push
         with:
           SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
           APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
