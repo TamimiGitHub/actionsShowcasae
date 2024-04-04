@@ -1,4 +1,4 @@
-name: Config Push
+name: Config Push Preview
 on:
   pull_request: 
     branches: [ master ]

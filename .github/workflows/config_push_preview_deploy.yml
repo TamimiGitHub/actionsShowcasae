@@ -1,0 +1,19 @@
+name: Config Push Deploy
+on:
+  push: 
+    branches: [ master ]
+
+env: 
+  APPLICATION_VERSION_ID: puu886to6kd
+  EVENT_MESH_NAME: us-central-solace-Prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Application Version
+        uses: SolaceDev/solace-ep-config-push@v0.1.0
+        with:
+          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+          APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
+          EVENT_MESH_NAME: ${{ env.EVENT_MESH_NAME }}
