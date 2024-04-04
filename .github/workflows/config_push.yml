@@ -16,10 +16,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Deploy Application Version ID
-        uses: SolaceDev/solace-ep-config-push
+        uses: SolaceDev/solace-ep-config-push@v0.0.4
         with:
           SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
           APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
