@@ -1,0 +1,24 @@
+name: Config Push
+on:
+  pull_request: 
+    branches: [ master ]
+
+env: 
+  APPLICATION_VERSION_ID: puu886to6kd
+  EVENT_MESH_NAME: us-central-solace-Prod
+  PREVIEW_ONLY: TRUE
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        
+      - name: Checkout terraform configuration repo
+        uses: actions/checkout@v4
+        with:
+          repository: TamimiGitHub/solace-terraform-provisioning
+          path: terraform
