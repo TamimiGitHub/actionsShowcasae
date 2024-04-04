@@ -12,10 +12,11 @@ jobs:
   plan:
     runs-on: ubuntu-latest
     steps:
-      - name: Preview Application Version Deployment Plan
-        uses: SolaceDev/solace-ep-config-push
-        with:
-          SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
-          APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
-          EVENT_MESH_NAME: ${{ env.EVENT_MESH_NAME }}
-          PREVIEW_ONLY: ${{ env.PREVIEW_ONLY }}
+      - uses: actions/checkout@v4
+      # - name: Preview Application Version Deployment Plan
+      #   uses: SolaceDev/solace-ep-config-push
+      #   with:
+      #     SOLACE_CLOUD_TOKEN: ${{ secrets.SOLACE_CLOUD_TOKEN }}
+      #     APPLICATION_VERSION_ID: ${{ env.APPLICATION_VERSION_ID }}
+      #     EVENT_MESH_NAME: ${{ env.EVENT_MESH_NAME }}
+      #     PREVIEW_ONLY: ${{ env.PREVIEW_ONLY }}
