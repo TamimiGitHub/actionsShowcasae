@@ -1,0 +1,34 @@
+name: Zip Workflow
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Zip test
+        uses: montudor/action-zip@v1
+        with:
+          args: | 
+            zip -qq -r sig.zip images/email-sig-tamimi.png
+            zip -qq -r scripts.zip init.sh lychee.toml
+      
+      # This step lists all files in dir
+      - name: List files
+        run: ls -R
+
+      - name: Unzip test
+        uses: montudor/action-zip@v1
+        with:
+          args: | 
+            unzip -qq sig.zip -d unzip
+            unzip -qq scripts.zip -d unzip
+        
+      # List all files in the unzip dir
+      - name: List unzipped files
+        run: ls -R unzip
