@@ -17,19 +17,11 @@ jobs:
 
       - name: Zip test
         run: |
-          zip -qq -r sig.zip images/email-sig-tamimi.png
-          zip -qq -r scripts.zip init.sh lychee.toml
-      
-      # This step lists all files in dir
-      - name: List files
-        run: ls -a
+          mkdir releases
+          zip -qq -r releases/sig.zip images/email-sig-tamimi.png
+          zip -qq -r releases/scripts.zip init.sh lychee.toml
 
-      # Unzip the sig.zip and scripts.zip files
-      - name: Unzip files
-        run: |
-          unzip sig.zip -d SOURCE
-          unzip scripts.zip -d SOURCE
-          
-      # List all files in the SOURCE directory
-      - name: List files in SOURCE
-        run: ls -a -R SOURCE
+      - name: Prepare archive
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release/*
