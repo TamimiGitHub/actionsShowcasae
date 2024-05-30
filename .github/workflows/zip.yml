@@ -20,15 +20,4 @@ jobs:
       
       # This step lists all files in dir
       - name: List files
-        run: ls -R
-
-      - name: Unzip test
-        uses: montudor/action-zip@v1
-        with:
-          args: | 
-            unzip -qq sig.zip -d unzip
-            unzip -qq scripts.zip -d unzip
-        
-      # List all files in the unzip dir
-      - name: List unzipped files
-        run: ls -R unzip
+        run: ls -a
