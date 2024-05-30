@@ -18,9 +18,13 @@ jobs:
 
       - name: Zip test
         run: |
-          mkdir releases
+          rm releases/test.txt
           zip -qq -r releases/sig.zip images/email-sig-tamimi.png
           zip -qq -r releases/scripts.zip init.sh lychee.toml
+      
+      #  List all files in the releases dir
+      - name: List files
+        run: ls -l releases
 
       - name: Prepare archive
         uses: softprops/action-gh-release@v1
