@@ -10,12 +10,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
+      # Install the zip command line took from apk
+      - name: Install zip
+        run: sudo apt-get install zip
 
       - name: Zip test
-        uses: montudor/action-zip@v1
-        with:
-          args: | 
-            zip -qq -r sig.zip images/email-sig-tamimi.png; zip -qq -r scripts.zip init.sh lychee.toml
+        run: |
+          zip -qq -r sig.zip images/email-sig-tamimi.png
+          zip -qq -r scripts.zip init.sh lychee.toml
       
       # This step lists all files in dir
       - name: List files
