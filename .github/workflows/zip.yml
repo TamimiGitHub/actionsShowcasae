@@ -23,3 +23,13 @@ jobs:
       # This step lists all files in dir
       - name: List files
         run: ls -a
+
+      # Unzip the sig.zip and scripts.zip files
+      - name: Unzip files
+        run: |
+          unzip sig.zip -d SOURCE
+          unzip scripts.zip -d SOURCE
+          
+      # List all files in the SOURCE directory
+      - name: List files in SOURCE
+        run: ls -a SOURCE
