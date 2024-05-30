@@ -1,7 +1,8 @@
 name: Zip Workflow
-
 on:
-  pull_request:
+  push:
+    tags:
+     - "v*"
 
 jobs:
   zip:
