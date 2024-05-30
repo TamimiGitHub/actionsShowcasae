@@ -32,4 +32,4 @@ jobs:
           
       # List all files in the SOURCE directory
       - name: List files in SOURCE
-        run: ls -a SOURCE
+        run: ls -a -R SOURCE
