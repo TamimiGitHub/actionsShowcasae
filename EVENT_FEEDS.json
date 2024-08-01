@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Account_Management",
+    "description": "Application for supporting account maintenance activities. Includes support for fraud detection.",
+    "img": "assets/img/defaultfeed.png",
+    "type": "asyncapi_feed",
+    "contributor": "Solace Community",
+    "github": "solacecommunity",
+    "domain": "Banking",
+    "tags": "Account Management, Fraud Detection",
+    "lastUpdated": "2024-05-23T12:33:18.293Z"
+  },
+  {
+    "name": "Point_of_Sale_System",
+    "description": "Commercial off-the-shelf (COTS) Point of Sale (PoS) system that serves checkout areas for all stores within acme-retail.   Receives Product events from supply chain management domain to allow for price updates and restrictions on purchases.  Emits Retail Order events that allow for analytics and supply chain management decisions.",
+    "img": "https://cdn-icons-png.flaticon.com/512/641/641813.png",
+    "type": "asyncapi_feed",
+    "contributor": "Giri Venkatesan",
+    "github": "gvensan",
+    "domain": "Retail",
+    "tags": "PoS, Shopping, Retail",
+    "lastUpdated": "2024-05-23T12:33:18.293Z"
+  },
+  {
+    "name": "Fake_London_Bus",
+    "description": "Fake London Bus",
+    "img": "assets/img/defaultfeed.png",
+    "type": "asyncapi_feed",
+    "contributor": "Giri Venkatesan",
+    "github": "gvensan",
+    "domain": "Transportation",
+    "tags": "Bus, Control",
+    "lastUpdated": "2024-05-23T12:33:18.293Z"
+  },
+  {
+    "name": "Aviation - ACARSEngine",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtdB0qq-iGC7RpPzwdvrlgEq8haqrY-_QQd-Wg61qrdA&s",
+    "title": "ACARSEngine",
+    "description": "ACARS-Aircraft Communications Addressing and Reporting System is a digital datalink system for transmission of short messages between aircraft and ground stations via airband radio or satellite. ",
+    "github": "solacecommunity",
+    "contributor": "Solace Community",
+    "domain": "Aviation",
+    "tags": "Landing Status, Aircraft Status",
+    "type": "asyncapi_feed",
+    "lastUpdated": "2024-06-09T16:31:36.870Z"
+  },
+  {
+    "name": "Aviation - AirOps",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtdB0qq-iGC7RpPzwdvrlgEq8haqrY-_QQd-Wg61qrdA&s",
+    "description": "AirOps systems is resposible for complex management of flight scheduling and trip oversight, crew compliance and communication, customer data, charter and maintenance .",
+    "github": "solacecommunity",
+    "contributor": "Solace Community",
+    "domain": "Aviation",
+    "tags": "Gate Change",
+    "type": "asyncapi_feed",
+    "lastUpdated": "2024-06-09T16:31:36.870Z"
+  },
+  {
+    "name": "CRMSystem",
+    "img": "https://assets.bizclikmedia.net/1800/3eb7889182dd47f70f445f0e16f3591a:e4b74fc371efa3cf6f5942192c548b8c/gettyimages-1259086543-0-jpg.webp",
+    "title": "CRMSystem",
+    "description": "Mange Customer information - Address Change, Birthday, Name and other personal information change management",
+    "github": "gvensan",
+    "contributor": "Giri Venkatesan",
+    "domain": "CRM",
+    "tags": "Customer Management",
+    "type": "asyncapi_feed",
+    "lastUpdated": "2024-06-09T16:31:36.870Z"
+  },
+  {
+    "name": "Mining - HR Service",
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcymJMuurAmVekjFY_PKcTYLpBuLNg5ZIa5w&s",
+    "title": "HR Service",
+    "description": "HR services in mining are crucial for managing the distinct challenges posed by the industry, which operates in often remote and hazardous environments. These services ensure the effective recruitment, retention, and development of a skilled workforce equipped to meet operational demands. Key functions include conducting robust safety and skills training, overseeing compliance with labor laws and safety regulations, and implementing programs that promote employee well-being and job satisfaction.",
+    "github": "solacecommunity",
+    "contributor": "Solace Community",
+    "domain": "Mining",
+    "tags": "HR Service, Shift Management, Break Management",
+    "type": "asyncapi_feed",
+    "lastUpdated": "2024-06-09T16:31:36.870Z"
+  },
+  {
+    "type": "restapi_feed",
+    "name": "Jokes",
+    "description": "Random Jokes",
+    "img": "assets/img/defaultfeed.png",
+    "contributor": "Anonymous",
+    "github": "",
+    "domain": "Jokes",
+    "tags": "Jokes",
+    "lastUpdated": "2024-07-02T12:48:54.776Z"
+  }
+]
