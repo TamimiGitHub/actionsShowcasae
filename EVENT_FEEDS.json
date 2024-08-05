@@ -91,14 +91,26 @@
     "lastUpdated": "2024-07-02T12:48:54.776Z"
   },
   {
+    "type": "restapi_feed",
+    "name": "StarWars",
+    "description": "Star Wars API for the People End Point",
+    "img": "https://lumiere-a.akamaihd.net/v1/images/image_5c51d8fe.jpeg",
+    "contributor": "Tamimi",
+    "github": "TamimiGithub",
+    "domain": "StarWars",
+    "tags": "starwars, fiction, movie, TV",
+    "lastUpdated": "2024-08-01T12:55:54.776Z"
+  },
+  {
     "type": "asyncapi_feed",
     "name": "basket-asyncapi",
     "description": "The Basket writer proxies HTTP requests, forwarding them to the Basket topic in solace when a user adds a new item using the REST proxy. \n\n[Source Code within GitHub](https://github.com/confluentinc/examples/tree/7.4.0-post/microservices-orders)",
     "img": "assets/img/defaultfeed.png",
-    "contributor": "Tamimi",
-    "github": "TamimiGithub",
+    "contributor": "Giri,Tamimi,Marc",
+    "github": "tamimigithub",
     "domain": "E-commerce",
-    "tags": "ecommerce, shopping",
-    "lastUpdated": "2024-08-01T16:08:35.226Z"
+    "tags": "ecommerce, shopping, basket",
+    "lastUpdated": "2024-08-05T16:04:03.068Z",
+    "contributed": true
   }
 ]
