@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "charID": {
+      "name": "charID",
+      "schema": {
+        "type": "string"
+      },
+      "rule": {
+        "name": "charID",
+        "type": "string",
+        "group": "StringRules",
+        "rule": "alpha",
+        "casing": "mixed",
+        "minLength": 10,
+        "maxLength": 10
+      }
+    }
+  },
+  "publishSettings": {
+    "count": "20",
+    "interval": "1",
+    "delay": "0"
+  }
+}
