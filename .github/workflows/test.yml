@@ -46,7 +46,7 @@ jobs:
       - run: ls release
 
       - name: Update Homebrew 
-        run: pwd; ./scripts/update_homebrew.sh ${{ steps.package-version.outputs.current-version}}
+        run: ./scripts/update_homebrew.sh ${{ steps.package-version.outputs.current-version}}
 
       # - name: Update APT Repository
       #   run: ./scripts/update_apt.sh
