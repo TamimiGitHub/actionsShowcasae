@@ -48,8 +48,8 @@ jobs:
         with:
           files: release/*
 
-      - run: ls -la release
-      
+      - run: ls -lR
+
       - name: Update Homebrew 
         run: ./scripts/update_homebrew.sh ${{ steps.package-version.outputs.current-version}}
 
