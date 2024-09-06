@@ -79,6 +79,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: release
+          merge-multiple: true
+
+      - run: ls -la 
 
       - name: Release
         uses: softprops/action-gh-release@v1
