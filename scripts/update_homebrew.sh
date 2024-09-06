@@ -20,6 +20,9 @@ echo "Updated $FORMULA_NAME to $pkg_version" > test.txt
 # Commit and push changes
 git config --global user.email "community@solace.com"
 git config --global user.name "SollyBot"
+# TEST
+git add .
+# TEST
 git commit -am "TESTING: Update $FORMULA_NAME to $pkg_version"
 git push
 
