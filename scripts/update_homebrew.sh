@@ -7,7 +7,8 @@ TAP_NAME="SolaceLabs/homebrew-stm.git"
 FORMULA_NAME="stm"
 
 # Clone the Homebrew tap
-git clone https://github.com/$TAP_NAME
+git clone https://x-access-token:$GITHUB_TOKEN@github.com/$TAP_NAME
+
 cd homebrew-$FORMULA_NAME
 
 # Update formula
@@ -20,9 +21,11 @@ echo "Updated $FORMULA_NAME to $pkg_version" > test.txt
 # Commit and push changes
 git config --global user.email "community@solace.com"
 git config --global user.name "SollyBot"
+
 # TEST
 git add .
 # TEST
+
 git commit -am "TESTING: Update $FORMULA_NAME to $pkg_version"
 git push
 
