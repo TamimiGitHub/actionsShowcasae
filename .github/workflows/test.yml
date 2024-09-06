@@ -1,0 +1,55 @@
+name: Test
+on:
+  pull_request: 
+    branches: [ master ]
+
+
+jobs:
+  release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with Submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+        
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn run build
+        
+      - name: Package
+        run: yarn run package
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
+      - name: Prepare stm archives for different targets
+        run: |
+          cd release
+          zip -qq -r stm-macos-v${{ steps.package-version.outputs.current-version}}.zip . -i stm-macos
+          zip -qq -r stm-linux-v${{ steps.package-version.outputs.current-version}}.zip . -i stm-linux
+          zip -qq -r stm-alpine-v${{ steps.package-version.outputs.current-version}}.zip . -i stm-alpine
+          zip -qq -r stm-win-v${{ steps.package-version.outputs.current-version}}.zip . -i stm-win.exe
+          rm stm-macos stm-linux stm-alpine stm-win.exe
+          cd ..
+      
+      - run: ls
+
+      - name: Update Homebrew 
+        run: ./scripts/update_homebrew.sh ${{ steps.package-version.outputs.current-version}}
+
+      # - name: Update APT Repository
+      #   run: ./scripts/update_apt.sh
+
+      # - name: Update Chocolatey
+      #   run: ./scripts/update_chocolatey.sh
