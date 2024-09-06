@@ -43,7 +43,7 @@ jobs:
           rm stm-macos stm-linux stm-alpine stm-win.exe
           cd ..
       
-      - run: ls
+      - run: ls release
 
       - name: Update Homebrew 
         run: ./scripts/update_homebrew.sh ${{ steps.package-version.outputs.current-version}}
