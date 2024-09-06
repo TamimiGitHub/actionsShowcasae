@@ -6,9 +6,14 @@ REPO_NAME="SolaceLabs/solace-tryme-cli"
 TAP_NAME="SolaceLabs/homebrew-stm.git"
 FORMULA_NAME="stm"
 
+echo "In update homebrew script"
+pwd
 # Clone the Homebrew tap
 git clone https://github.com/$TAP_NAME
 cd homebrew-$FORMULA_NAME
+pwd
+echo "in homebrew-$FORMULA_NAME"
+ls -lR
 
 # Update formula
 pkg_version=$1
