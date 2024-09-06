@@ -32,9 +32,6 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@v1.3.1
-      
-      - name: Install zip command line tool
-        run: sudo apt-get install zip
 
       - name: Prepare stm archives for different targets
         run: |
@@ -93,6 +90,10 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: artifacts/*
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
 
       - name: Update Homebrew
         run: ./scripts/update_homebrew.sh
