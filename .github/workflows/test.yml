@@ -65,15 +65,12 @@ jobs:
           > DEBIAN/control
           cd ../
           pwd
-          ls -R stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
-          ls -la stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
-
           cat stm-linux_${{ steps.package-version.outputs.current-version}}_amd64/DEBIAN/control
-          dpkg --build -v ./stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
+          dpkg --build ./stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
 
           ## TEST
-          dpkg --contents stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
-          dpkg --info stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
+          dpkg --contents stm-linux_${{ steps.package-version.outputs.current-version}}_amd64.deb
+          dpkg --info stm-linux_${{ steps.package-version.outputs.current-version}}_amd64.deb
 
       - name: Update APT Repository
         run: ./scripts/update_apt.sh ${{ steps.package-version.outputs.current-version}}
