@@ -65,7 +65,6 @@ jobs:
           > DEBIAN/control
           cd ../
           pwd
-          ls -lR
           dpkg --build stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
 
           ## TEST
