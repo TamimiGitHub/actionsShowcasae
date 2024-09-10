@@ -52,7 +52,7 @@ jobs:
           mkdir -p stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           cd stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           mkdir -p usr/bin
-          cp release/stm-linux/stm-linux usr/bin/.
+          cp ../release/stm-linux usr/bin/.
           mkdir -p DEBIAN
           echo "Package: stm
             Version: ${{ steps.package-version.outputs.current-version}}
@@ -65,7 +65,7 @@ jobs:
           > DEBIAN/control
           cd ../
           dpkg --build stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
-          
+
           ## TEST
           dpkg --contents stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           dpkg --info stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
