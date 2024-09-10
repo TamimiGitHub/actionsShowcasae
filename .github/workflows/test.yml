@@ -52,7 +52,7 @@ jobs:
           mkdir -p stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           cd stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           mkdir -p usr/bin
-          cp ../release/stm-linux usr/bin/.
+          cp ../release/stm-linux usr/bin/stm
           mkdir -p DEBIAN
           echo "Package: stm
           Version: ${{ steps.package-version.outputs.current-version}}
@@ -64,6 +64,8 @@ jobs:
           Description: This is a command line tool to help you get started with Solace PubSub+ Event Broker" \
           > DEBIAN/control
           cd ../
+          pwd
+          ls -lR
           dpkg --build stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
 
           ## TEST
