@@ -64,12 +64,7 @@ jobs:
           Description: This is a command line tool to help you get started with Solace PubSub+ Event Broker" \
           > DEBIAN/control
           cd ../
-          pwd
-          cat stm-linux_${{ steps.package-version.outputs.current-version}}_amd64/DEBIAN/control
           dpkg --build ./stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
-
-          ## TEST
-          dpkg --contents stm-linux_${{ steps.package-version.outputs.current-version}}_amd64.deb
           dpkg --info stm-linux_${{ steps.package-version.outputs.current-version}}_amd64.deb
 
       - name: Update APT Repository
