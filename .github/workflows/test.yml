@@ -55,13 +55,13 @@ jobs:
           cp ../release/stm-linux usr/bin/.
           mkdir -p DEBIAN
           echo "Package: stm
-            Version: ${{ steps.package-version.outputs.current-version}}
-            Maintainer: SolaceCommunity <community@solace.dev>
-            Depends: libc6
-            Section: utils
-            Architecture: amd64
-            Homepage: http://solace.dev
-            Description: This is a command line tool to help you get started with Solace PubSub+ Event Broker" \
+          Version: ${{ steps.package-version.outputs.current-version}}
+          Maintainer: SolaceCommunity <community@solace.dev>
+          Depends: libc6
+          Section: utils
+          Architecture: amd64
+          Homepage: http://solace.dev
+          Description: This is a command line tool to help you get started with Solace PubSub+ Event Broker" \
           > DEBIAN/control
           cd ../
           dpkg --build stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
