@@ -67,7 +67,7 @@ jobs:
           pwd
           ls -lR stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
           cat stm-linux_${{ steps.package-version.outputs.current-version}}_amd64/DEBIAN/control
-          dpkg --build stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
+          dpkg --build ./stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
 
           ## TEST
           dpkg --contents stm-linux_${{ steps.package-version.outputs.current-version}}_amd64
