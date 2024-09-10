@@ -15,12 +15,12 @@ git clone https://x-access-token:$GITHUB_TOKEN@github.com/$APT_SERVER
 reprepro -b apt-stm/ --priority 0 includedeb stm stm-linux_$pkg_version\_amd64.deb
 
 #### TEST ####
+cd apt-stm/
 git status
 #### TEST ####
 
 
 # Commit and push changes
-# cd apt-stm/
 # git config --global user.email "community@solace.com"
 # git config --global user.name "SollyBot"
 # git commit -am "Update stm to v$pkg_version"
