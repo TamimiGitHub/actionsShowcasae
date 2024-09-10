@@ -15,7 +15,7 @@ git clone https://x-access-token:$GITHUB_TOKEN@github.com/$APT_SERVER
 reprepro -b apt-stm/ --priority 0 includedeb stm stm-linux_$pkg_version\_amd64.deb
 
 #### TEST ####
-ls -lR apt-stm/
+git status
 #### TEST ####
 
 
