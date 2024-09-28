@@ -1,16 +1,5 @@
 [
   {
-    "name": "Account_Management",
-    "description": "Application for supporting account maintenance activities. Includes support for fraud detection.",
-    "img": "assets/img/defaultfeed.png",
-    "type": "asyncapi_feed",
-    "contributor": "Solace Community",
-    "github": "solacecommunity",
-    "domain": "Banking",
-    "tags": "Account Management, Fraud Detection",
-    "lastUpdated": "2024-05-23T12:33:18.293Z"
-  },
-  {
     "name": "Point_of_Sale_System",
     "description": "Commercial off-the-shelf (COTS) Point of Sale (PoS) system that serves checkout areas for all stores within acme-retail.   Receives Product events from supply chain management domain to allow for price updates and restrictions on purchases.  Emits Retail Order events that allow for analytics and supply chain management decisions.",
     "img": "https://cdn-icons-png.flaticon.com/512/641/641813.png",
@@ -19,17 +8,6 @@
     "github": "gvensan",
     "domain": "Retail",
     "tags": "PoS, Shopping, Retail",
-    "lastUpdated": "2024-05-23T12:33:18.293Z"
-  },
-  {
-    "name": "Fake_London_Bus",
-    "description": "Fake London Bus",
-    "img": "assets/img/defaultfeed.png",
-    "type": "asyncapi_feed",
-    "contributor": "Giri Venkatesan",
-    "github": "gvensan",
-    "domain": "Transportation",
-    "tags": "Bus, Control",
     "lastUpdated": "2024-05-23T12:33:18.293Z"
   },
   {
@@ -45,17 +23,6 @@
     "lastUpdated": "2024-06-09T16:31:36.870Z"
   },
   {
-    "name": "Aviation - AirOps",
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtdB0qq-iGC7RpPzwdvrlgEq8haqrY-_QQd-Wg61qrdA&s",
-    "description": "AirOps systems is resposible for complex management of flight scheduling and trip oversight, crew compliance and communication, customer data, charter and maintenance .",
-    "github": "solacecommunity",
-    "contributor": "Solace Community",
-    "domain": "Aviation",
-    "tags": "Gate Change",
-    "type": "asyncapi_feed",
-    "lastUpdated": "2024-06-09T16:31:36.870Z"
-  },
-  {
     "name": "CRMSystem",
     "img": "https://assets.bizclikmedia.net/1800/3eb7889182dd47f70f445f0e16f3591a:e4b74fc371efa3cf6f5942192c548b8c/gettyimages-1259086543-0-jpg.webp",
     "title": "CRMSystem",
@@ -63,7 +30,7 @@
     "github": "gvensan",
     "contributor": "Giri Venkatesan",
     "domain": "CRM",
-    "tags": "Customer Management",
+    "tags": "Address Change, Name Change, DOB Change",
     "type": "asyncapi_feed",
     "lastUpdated": "2024-06-09T16:31:36.870Z"
   },
@@ -81,13 +48,73 @@
   },
   {
     "type": "restapi_feed",
-    "name": "Jokes",
-    "description": "Random Jokes",
+    "name": "StarWars",
+    "description": "Star Wars API for the People End Point. All the Star Wars data you've ever wanted: Planets, Spaceships, Vehicles, People, Films and Species -  From all SEVEN Star Wars films, Now with The Force Awakens data!",
+    "img": "https://lumiere-a.akamaihd.net/v1/images/image_5c51d8fe.jpeg",
+    "contributor": "Tamimi",
+    "github": "TamimiGithub",
+    "domain": "StarWars",
+    "tags": "starwars, fiction, movie, TV",
+    "lastUpdated": "2024-08-01T12:55:54.776Z"
+  },
+  {
+    "type": "asyncapi_feed",
+    "name": "Fraud-Detection",
+    "description": "Application which scans and detects fradulent transactions in a banking domain",
     "img": "assets/img/defaultfeed.png",
-    "contributor": "Anonymous",
-    "github": "",
-    "domain": "Jokes",
-    "tags": "Jokes",
-    "lastUpdated": "2024-07-02T12:48:54.776Z"
+    "contributor": "Hari-Rangarajan-Solace",
+    "github": "Hari-Rangarajan-Solace",
+    "domain": "Acme-Banking",
+    "tags": "fraud detection, banking, solace broker, intelligent topics",
+    "lastUpdated": "2024-08-14T07:30:29.801Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "name": "Shipping-Service",
+    "description": "A streaming service leveraging the solace Streams API. This service reacts to orders as they are created, updating the Shipping topic as notifications are received from the delivery company",
+    "img": "https://cdn-icons-png.flaticon.com/512/411/411763.png",
+    "contributor": "Tamimi",
+    "github": "TamimiGithub",
+    "domain": "Shipping",
+    "tags": "shipping, delivery, tracking",
+    "lastUpdated": "2024-08-14T09:11:25.554Z",
+    "contributed": true
+  },
+  {
+    "type": "restapi_feed",
+    "name": "Random-User-Generator",
+    "description": "The random user generator provides realistic user data for testing and development purposes. The user's profile encompasses personal information such as email (kim.myre@example.com), login credentials, date of birth, and registration details. Additionally, it includes contact numbers, a unique identifier, and a set of profile pictures. The generator also specifies geographical coordinates and timezone information, offering a comprehensive, realistic user profile for various application scenarios.",
+    "img": "https://xsgames.co/randomusers/assets/images/favicon.png",
+    "contributor": "Giri Venkatesan",
+    "github": "gvensan",
+    "domain": "Random Data",
+    "tags": "random user, fake data, fake profile",
+    "lastUpdated": "2024-08-14T09:51:47.345Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "name": "Core-Banking",
+    "description": "The Core Banking Application processes all transactions across bank accounts and automatically publishes the relevant event for each transaction. It ensures seamless, real-time management of all financial activities, enhancing operational efficiency and system integration",
+    "img": "assets/img/defaultfeed.png",
+    "contributor": "Hari-Rangarajan-Solace",
+    "github": "HariRangarajan-Solace",
+    "domain": "Acme-Banking",
+    "tags": "banking, transactions generator, solace broker, intelligent topics",
+    "lastUpdated": "2024-08-14T12:14:30.086Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "name": "ERP System-1",
+    "description": "ERP Example",
+    "img": "https://previews.123rf.com/images/vectorhome/vectorhome1911/vectorhome191100162/138281542-erp-system-icon-vector-illustration.jpg",
+    "contributor": "Marc DiPasquale",
+    "github": "Mrc0113",
+    "domain": "Retail",
+    "tags": "erp, retail",
+    "lastUpdated": "2024-09-28T02:09:29.687Z",
+    "contributed": true
   }
 ]
