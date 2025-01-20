@@ -1,0 +1,12 @@
+{
+  "type": "asyncapi_feed",
+  "name": "Barista Station",
+  "description": "Automated Barista station that publishes events on every completed order and low inventory",
+  "img": "https://cdn-icons-png.flaticon.com/512/2935/2935307.png",
+  "contributor": "Tamimi",
+  "github": "TamimiGithub",
+  "domain": "Coffee Shop",
+  "tags": "coffee",
+  "lastUpdated": "2025-01-20T18:37:26.682Z",
+  "contributed": true
+}
