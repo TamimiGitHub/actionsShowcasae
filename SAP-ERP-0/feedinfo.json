@@ -1,0 +1,13 @@
+{
+  "type": "asyncapi_feed",
+  "feedView": "default",
+  "name": "SAP-ERP-0",
+  "description": "SAP ERP",
+  "img": "assets/img/defaultfeed.png",
+  "contributor": "",
+  "github": "solacecommunity-bot",
+  "domain": "SAP",
+  "tags": "SAP",
+  "lastUpdated": "2025-01-20T18:38:38.001Z",
+  "contributed": true
+}
