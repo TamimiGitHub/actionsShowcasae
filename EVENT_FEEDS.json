@@ -59,7 +59,7 @@
   },
   {
     "type": "asyncapi_feed",
-    "name": "Fraud-Detection",
+    "name": "Fraud Detection",
     "description": "Application which scans and detects fradulent transactions in a banking domain",
     "img": "https://cdn-icons-png.flaticon.com/512/1671/1671618.png",
     "contributor": "Hari-Rangarajan-Solace",
@@ -71,7 +71,7 @@
   },
   {
     "type": "asyncapi_feed",
-    "name": "Shipping-Service",
+    "name": "Shipping Service",
     "description": "A streaming service leveraging the solace Streams API. This service reacts to orders as they are created, updating the Shipping topic as notifications are received from the delivery company",
     "img": "https://cdn-icons-png.flaticon.com/512/411/411712.png",
     "contributor": "Tamimi",
@@ -95,7 +95,7 @@
   },
   {
     "type": "asyncapi_feed",
-    "name": "Core-Banking",
+    "name": "Core Banking",
     "description": "The Core Banking Application processes all transactions across bank accounts and automatically publishes the relevant event for each transaction. It ensures seamless, real-time management of all financial activities, enhancing operational efficiency and system integration",
     "img": "https://cdn-icons-png.flaticon.com/512/3635/3635995.png",
     "contributor": "Hari-Rangarajan-Solace",
@@ -120,14 +120,53 @@
   {
     "type": "asyncapi_feed",
     "feedView": "default",
-    "name": "BaristaStation",
+    "name": "Barista Station",
     "description": "Coffee Shop",
-    "img": "assets/img/defaultfeed.png",
+    "img": "https://cdn-icons-png.flaticon.com/512/2935/2935307.png",
     "contributor": "Giri Venkatesan",
     "github": "gvensan",
     "domain": "Retail",
     "tags": "Coffee Shop, Beverages",
     "lastUpdated": "2025-01-13T16:54:32.797Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "feedView": "default",
+    "name": "SAP ERP",
+    "description": "SAP Enterprise Resource Planning Application Events like creation or Modification of Sales Orders, Chart Of Accounts, Notifications, Business Partners, Material Master.",
+    "img": "https://e7.pngegg.com/pngimages/113/132/png-clipart-sap-se-logo-sap-erp-business-sap-hybris-business-blue-text-thumbnail.png",
+    "contributor": "Alessandro Cagnetti",
+    "github": "github.com/acagnetti",
+    "domain": "Enterprise resource Planning",
+    "tags": "sap, erp, materials, partners, orders, business, master, notification",
+    "lastUpdated": "2025-01-21T08:48:52.492Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "feedView": "default",
+    "name": "EV Car Telematics",
+    "description": "Car Telematics API for EV connected car telematics system.\nHandles various events including location updates, speed monitoring, battery status, and vehicle diagnostics.",
+    "img": "https://cdn-icons-png.flaticon.com/512/3085/3085330.png",
+    "contributor": "Tamimi AlTamimi",
+    "github": "TamimiGithub",
+    "domain": "Automotive",
+    "tags": "car, telemetics, EV, connected cars, ",
+    "lastUpdated": "2025-02-20T04:00:36.319Z",
+    "contributed": true
+  },
+  {
+    "type": "asyncapi_feed",
+    "feedView": "default",
+    "name": "EV Car Telematcs",
+    "description": "Car Telematics API for EV connected car telematics system.\nHandles various events including location updates, speed monitoring, battery status, and vehicle diagnostics.",
+    "img": "https://cdn-icons-png.flaticon.com/512/3085/3085330.png",
+    "contributor": "Tamimi AlTamimi",
+    "github": "TamimiGithub",
+    "domain": "Car",
+    "tags": "car, telemetics, EV, connected cars, ",
+    "lastUpdated": "2025-02-21T17:48:35.885Z",
     "contributed": true
   }
 ]
